@@ -385,7 +385,7 @@
                                 "configuration": {
                                   "Owner": "Barrokgl",
                                   "Repo": "cdk-pipeline-demo",
-                                  "Branch": "master",
+                                  "Branch": "main",
                                   "OAuthToken": "{{resolve:secretsmanager:test-github-token:SecretString:::}}",
                                   "PollForSourceChanges": false
                                 },
