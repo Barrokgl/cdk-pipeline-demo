@@ -1,6 +1,6 @@
 import {Construct, SecretValue, Stack, StackProps} from "@aws-cdk/core";
 import {Artifact} from "@aws-cdk/aws-codepipeline";
-import {CdkPipeline, SimpleSynthAction} from "@aws-cdk/pipelines";
+import {CdkPipeline, ShellScriptAction, SimpleSynthAction} from "@aws-cdk/pipelines";
 import {GitHubSourceAction} from "@aws-cdk/aws-codepipeline-actions";
 import {DemoStage} from "./demo.stage";
 
@@ -34,11 +34,23 @@ export class PipelineStack extends Stack {
             synthAction
         });
 
-        pipeline.addApplicationStage(new DemoStage(this, 'pre-prod', {
-           env: {
-               region: 'us-east-1',
-               account: '982637769374'
-           }
+        const preProd = new DemoStage(this, 'pre-prod', {
+            env: {
+                region: 'us-east-1',
+                account: '982637769374'
+            }
+        });
+
+        const preProdStage = pipeline.addApplicationStage(preProd);
+
+        preProdStage.addActions(new ShellScriptAction({
+            actionName: 'TestService',
+            useOutputs: {
+                ENDPOINT_URL: pipeline.stackOutput(preProd.urlOutput)
+            },
+            commands: [
+                'curl -Ssf $ENDPOINT_URL'
+            ]
         }));
     }
 }
