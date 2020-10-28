@@ -1,0 +1,639 @@
+{
+  "version": "6.0.0",
+  "artifacts": {
+    "pipelinepreprodwebservice7055A599.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "pipelinepreprodwebservice7055A599.assets.json",
+        "requiresBootstrapStackVersion": 4
+      }
+    },
+    "pipelinepreprodwebservice7055A599": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://982637769374/us-east-1",
+      "properties": {
+        "templateFile": "pipelinepreprodwebservice7055A599.template.json",
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::982637769374:role/cdk-hnb659fds-deploy-role-982637769374-us-east-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::982637769374:role/cdk-hnb659fds-cfn-exec-role-982637769374-us-east-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-982637769374-us-east-1/0fa8319798c2eb9aaa6a715aa0d25870b2f1d657f592585ee14fcaac90662ea2",
+        "requiresBootstrapStackVersion": 4,
+        "additionalDependencies": [
+          "pipelinepreprodwebservice7055A599.assets"
+        ],
+        "stackName": "pre-prod-web-service"
+      },
+      "dependencies": [
+        "pipelinepreprodwebservice7055A599.assets"
+      ],
+      "metadata": {
+        "/pipeline/pre-prod/web-service/lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "lambdaServiceRole494E4CA6",
+            "trace": [
+              "new Role (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-iam/lib/role.ts:327:18)",
+              "new Function (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-lambda/lib/function.ts:539:31)",
+              "new ApiStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/api.stack.ts:12:25)",
+              "new DemoStage (/home/barrokgl/learn/cdk-pipeline-demo/lib/demo.stage.ts:10:25)",
+              "new PipelineStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/pipeline.stack.ts:37:38)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/bin/demo.ts:9:1)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Module.m._compile (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:858:23)",
+              "Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Object.require.extensions.<computed> [as .ts] (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:861:12)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "main (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:227:14)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:513:3)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "/home/barrokgl/.nvm/versions/node/v12.19.0/lib/node_modules/npm/node_modules/libnpx/index.js:268:14"
+            ]
+          }
+        ],
+        "/pipeline/pre-prod/web-service/lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "lambda8B5974B5",
+            "trace": [
+              "new Function (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-lambda/lib/function.ts:593:35)",
+              "new ApiStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/api.stack.ts:12:25)",
+              "new DemoStage (/home/barrokgl/learn/cdk-pipeline-demo/lib/demo.stage.ts:10:25)",
+              "new PipelineStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/pipeline.stack.ts:37:38)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/bin/demo.ts:9:1)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Module.m._compile (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:858:23)",
+              "Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Object.require.extensions.<computed> [as .ts] (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:861:12)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "main (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:227:14)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:513:3)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "/home/barrokgl/.nvm/versions/node/v12.19.0/lib/node_modules/npm/node_modules/libnpx/index.js:268:14"
+            ]
+          }
+        ],
+        "/pipeline/pre-prod/web-service/rest-api/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapi39D779F7",
+            "trace": [
+              "new RestApi (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/restapi.ts:673:22)",
+              "new LambdaRestApi (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/lambda-api.ts:50:5)",
+              "new ApiStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/api.stack.ts:18:25)",
+              "new DemoStage (/home/barrokgl/learn/cdk-pipeline-demo/lib/demo.stage.ts:10:25)",
+              "new PipelineStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/pipeline.stack.ts:37:38)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/bin/demo.ts:9:1)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Module.m._compile (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:858:23)",
+              "Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Object.require.extensions.<computed> [as .ts] (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:861:12)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "main (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:227:14)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:513:3)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "/home/barrokgl/.nvm/versions/node/v12.19.0/lib/node_modules/npm/node_modules/libnpx/index.js:268:14"
+            ]
+          }
+        ],
+        "/pipeline/pre-prod/web-service/rest-api/CloudWatchRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiCloudWatchRole2D9E2F10",
+            "trace": [
+              "new Role (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-iam/lib/role.ts:327:18)",
+              "LambdaRestApi.configureCloudWatchRole (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/restapi.ts:480:18)",
+              "new RestApi (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/restapi.ts:690:12)",
+              "new LambdaRestApi (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/lambda-api.ts:50:5)",
+              "new ApiStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/api.stack.ts:18:25)",
+              "new DemoStage (/home/barrokgl/learn/cdk-pipeline-demo/lib/demo.stage.ts:10:25)",
+              "new PipelineStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/pipeline.stack.ts:37:38)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/bin/demo.ts:9:1)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Module.m._compile (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:858:23)",
+              "Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Object.require.extensions.<computed> [as .ts] (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:861:12)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "main (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:227:14)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:513:3)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "/home/barrokgl/.nvm/versions/node/v12.19.0/lib/node_modules/npm/node_modules/libnpx/index.js:268:14"
+            ]
+          }
+        ],
+        "/pipeline/pre-prod/web-service/rest-api/Account": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiAccountC2304339",
+            "trace": [
+              "LambdaRestApi.configureCloudWatchRole (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/restapi.ts:485:22)",
+              "new RestApi (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/restapi.ts:690:12)",
+              "new LambdaRestApi (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/lambda-api.ts:50:5)",
+              "new ApiStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/api.stack.ts:18:25)",
+              "new DemoStage (/home/barrokgl/learn/cdk-pipeline-demo/lib/demo.stage.ts:10:25)",
+              "new PipelineStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/pipeline.stack.ts:37:38)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/bin/demo.ts:9:1)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Module.m._compile (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:858:23)",
+              "Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Object.require.extensions.<computed> [as .ts] (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:861:12)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "main (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:227:14)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:513:3)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "/home/barrokgl/.nvm/versions/node/v12.19.0/lib/node_modules/npm/node_modules/libnpx/index.js:268:14"
+            ]
+          }
+        ],
+        "/pipeline/pre-prod/web-service/rest-api/Deployment/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiDeploymentD3722A4C6ba0ea2959d954e0f965171df1982e26",
+            "trace": [
+              "new Deployment (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/deployment.ts:71:21)",
+              "LambdaRestApi.configureDeployment (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/restapi.ts:496:32)",
+              "new RestApi (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/restapi.ts:693:10)",
+              "new LambdaRestApi (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/lambda-api.ts:50:5)",
+              "new ApiStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/api.stack.ts:18:25)",
+              "new DemoStage (/home/barrokgl/learn/cdk-pipeline-demo/lib/demo.stage.ts:10:25)",
+              "new PipelineStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/pipeline.stack.ts:37:38)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/bin/demo.ts:9:1)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Module.m._compile (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:858:23)",
+              "Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Object.require.extensions.<computed> [as .ts] (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:861:12)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "main (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:227:14)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:513:3)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "/home/barrokgl/.nvm/versions/node/v12.19.0/lib/node_modules/npm/node_modules/libnpx/index.js:268:14"
+            ]
+          }
+        ],
+        "/pipeline/pre-prod/web-service/rest-api/DeploymentStage.prod/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiDeploymentStageprod0335F613",
+            "trace": [
+              "new Stage (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/stage.ts:240:22)",
+              "LambdaRestApi.configureDeployment (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/restapi.ts:506:30)",
+              "new RestApi (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/restapi.ts:693:10)",
+              "new LambdaRestApi (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/lambda-api.ts:50:5)",
+              "new ApiStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/api.stack.ts:18:25)",
+              "new DemoStage (/home/barrokgl/learn/cdk-pipeline-demo/lib/demo.stage.ts:10:25)",
+              "new PipelineStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/pipeline.stack.ts:37:38)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/bin/demo.ts:9:1)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Module.m._compile (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:858:23)",
+              "Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Object.require.extensions.<computed> [as .ts] (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:861:12)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "main (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:227:14)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:513:3)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "/home/barrokgl/.nvm/versions/node/v12.19.0/lib/node_modules/npm/node_modules/libnpx/index.js:268:14"
+            ]
+          }
+        ],
+        "/pipeline/pre-prod/web-service/rest-api/Endpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiEndpointC67DEFEA",
+            "trace": [
+              "LambdaRestApi.configureDeployment (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/restapi.ts:511:7)",
+              "new RestApi (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/restapi.ts:693:10)",
+              "new LambdaRestApi (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/lambda-api.ts:50:5)",
+              "new ApiStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/api.stack.ts:18:25)",
+              "new DemoStage (/home/barrokgl/learn/cdk-pipeline-demo/lib/demo.stage.ts:10:25)",
+              "new PipelineStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/pipeline.stack.ts:37:38)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/bin/demo.ts:9:1)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Module.m._compile (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:858:23)",
+              "Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Object.require.extensions.<computed> [as .ts] (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:861:12)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "main (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:227:14)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:513:3)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "/home/barrokgl/.nvm/versions/node/v12.19.0/lib/node_modules/npm/node_modules/libnpx/index.js:268:14"
+            ]
+          }
+        ],
+        "/pipeline/pre-prod/web-service/rest-api/Default/{proxy+}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiproxyD63C125B",
+            "trace": [
+              "new Resource (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:402:22)",
+              "new ProxyResource (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:474:5)",
+              "RootResource.addProxy (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:191:12)",
+              "new LambdaRestApi (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/lambda-api.ts:57:17)",
+              "new ApiStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/api.stack.ts:18:25)",
+              "new DemoStage (/home/barrokgl/learn/cdk-pipeline-demo/lib/demo.stage.ts:10:25)",
+              "new PipelineStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/pipeline.stack.ts:37:38)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/bin/demo.ts:9:1)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Module.m._compile (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:858:23)",
+              "Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Object.require.extensions.<computed> [as .ts] (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:861:12)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "main (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:227:14)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:513:3)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "/home/barrokgl/.nvm/versions/node/v12.19.0/lib/node_modules/npm/node_modules/libnpx/index.js:268:14"
+            ]
+          }
+        ],
+        "/pipeline/pre-prod/web-service/rest-api/Default/{proxy+}/ANY/ApiPermission.pipelinepreprodwebservicerestapiDE70E343.ANY..{proxy+}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiproxyANYApiPermissionpipelinepreprodwebservicerestapiDE70E343ANYproxyE5C6D001",
+            "trace": [
+              "Function.addPermission (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-lambda/lib/function-base.ts:221:5)",
+              "LambdaIntegration.bind (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/integrations/lambda.ts:61:18)",
+              "new Method (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/method.ts:197:36)",
+              "ProxyResource.addMethod (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:187:12)",
+              "ProxyResource.addMethod (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:496:18)",
+              "new ProxyResource (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:483:29)",
+              "RootResource.addProxy (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:191:12)",
+              "new LambdaRestApi (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/lambda-api.ts:57:17)",
+              "new ApiStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/api.stack.ts:18:25)",
+              "new DemoStage (/home/barrokgl/learn/cdk-pipeline-demo/lib/demo.stage.ts:10:25)",
+              "new PipelineStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/pipeline.stack.ts:37:38)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/bin/demo.ts:9:1)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Module.m._compile (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:858:23)",
+              "Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Object.require.extensions.<computed> [as .ts] (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:861:12)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "main (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:227:14)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:513:3)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "/home/barrokgl/.nvm/versions/node/v12.19.0/lib/node_modules/npm/node_modules/libnpx/index.js:268:14"
+            ]
+          }
+        ],
+        "/pipeline/pre-prod/web-service/rest-api/Default/{proxy+}/ANY/ApiPermission.Test.pipelinepreprodwebservicerestapiDE70E343.ANY..{proxy+}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiproxyANYApiPermissionTestpipelinepreprodwebservicerestapiDE70E343ANYproxy4B3FBDAB",
+            "trace": [
+              "Function.addPermission (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-lambda/lib/function-base.ts:221:5)",
+              "LambdaIntegration.bind (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/integrations/lambda.ts:69:20)",
+              "new Method (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/method.ts:197:36)",
+              "ProxyResource.addMethod (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:187:12)",
+              "ProxyResource.addMethod (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:496:18)",
+              "new ProxyResource (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:483:29)",
+              "RootResource.addProxy (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:191:12)",
+              "new LambdaRestApi (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/lambda-api.ts:57:17)",
+              "new ApiStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/api.stack.ts:18:25)",
+              "new DemoStage (/home/barrokgl/learn/cdk-pipeline-demo/lib/demo.stage.ts:10:25)",
+              "new PipelineStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/pipeline.stack.ts:37:38)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/bin/demo.ts:9:1)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Module.m._compile (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:858:23)",
+              "Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Object.require.extensions.<computed> [as .ts] (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:861:12)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "main (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:227:14)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:513:3)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "/home/barrokgl/.nvm/versions/node/v12.19.0/lib/node_modules/npm/node_modules/libnpx/index.js:268:14"
+            ]
+          }
+        ],
+        "/pipeline/pre-prod/web-service/rest-api/Default/{proxy+}/ANY/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiproxyANY86DB073A",
+            "trace": [
+              "new Method (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/method.ts:215:22)",
+              "ProxyResource.addMethod (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:187:12)",
+              "ProxyResource.addMethod (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:496:18)",
+              "new ProxyResource (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:483:29)",
+              "RootResource.addProxy (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:191:12)",
+              "new LambdaRestApi (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/lambda-api.ts:57:17)",
+              "new ApiStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/api.stack.ts:18:25)",
+              "new DemoStage (/home/barrokgl/learn/cdk-pipeline-demo/lib/demo.stage.ts:10:25)",
+              "new PipelineStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/pipeline.stack.ts:37:38)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/bin/demo.ts:9:1)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Module.m._compile (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:858:23)",
+              "Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Object.require.extensions.<computed> [as .ts] (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:861:12)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "main (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:227:14)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:513:3)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "/home/barrokgl/.nvm/versions/node/v12.19.0/lib/node_modules/npm/node_modules/libnpx/index.js:268:14"
+            ]
+          }
+        ],
+        "/pipeline/pre-prod/web-service/rest-api/Default/ANY/ApiPermission.pipelinepreprodwebservicerestapiDE70E343.ANY..": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiANYApiPermissionpipelinepreprodwebservicerestapiDE70E343ANYC53B96AB",
+            "trace": [
+              "Function.addPermission (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-lambda/lib/function-base.ts:221:5)",
+              "LambdaIntegration.bind (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/integrations/lambda.ts:61:18)",
+              "new Method (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/method.ts:197:36)",
+              "RootResource.addMethod (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:187:12)",
+              "ProxyResource.addMethod (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:493:29)",
+              "new ProxyResource (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:483:29)",
+              "RootResource.addProxy (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:191:12)",
+              "new LambdaRestApi (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/lambda-api.ts:57:17)",
+              "new ApiStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/api.stack.ts:18:25)",
+              "new DemoStage (/home/barrokgl/learn/cdk-pipeline-demo/lib/demo.stage.ts:10:25)",
+              "new PipelineStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/pipeline.stack.ts:37:38)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/bin/demo.ts:9:1)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Module.m._compile (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:858:23)",
+              "Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Object.require.extensions.<computed> [as .ts] (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:861:12)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "main (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:227:14)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:513:3)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "/home/barrokgl/.nvm/versions/node/v12.19.0/lib/node_modules/npm/node_modules/libnpx/index.js:268:14"
+            ]
+          }
+        ],
+        "/pipeline/pre-prod/web-service/rest-api/Default/ANY/ApiPermission.Test.pipelinepreprodwebservicerestapiDE70E343.ANY..": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiANYApiPermissionTestpipelinepreprodwebservicerestapiDE70E343ANY84B46106",
+            "trace": [
+              "Function.addPermission (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-lambda/lib/function-base.ts:221:5)",
+              "LambdaIntegration.bind (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/integrations/lambda.ts:69:20)",
+              "new Method (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/method.ts:197:36)",
+              "RootResource.addMethod (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:187:12)",
+              "ProxyResource.addMethod (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:493:29)",
+              "new ProxyResource (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:483:29)",
+              "RootResource.addProxy (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:191:12)",
+              "new LambdaRestApi (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/lambda-api.ts:57:17)",
+              "new ApiStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/api.stack.ts:18:25)",
+              "new DemoStage (/home/barrokgl/learn/cdk-pipeline-demo/lib/demo.stage.ts:10:25)",
+              "new PipelineStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/pipeline.stack.ts:37:38)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/bin/demo.ts:9:1)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Module.m._compile (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:858:23)",
+              "Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Object.require.extensions.<computed> [as .ts] (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:861:12)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "main (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:227:14)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:513:3)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "/home/barrokgl/.nvm/versions/node/v12.19.0/lib/node_modules/npm/node_modules/libnpx/index.js:268:14"
+            ]
+          }
+        ],
+        "/pipeline/pre-prod/web-service/rest-api/Default/ANY/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "restapiANYA270F193",
+            "trace": [
+              "new Method (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/method.ts:215:22)",
+              "RootResource.addMethod (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:187:12)",
+              "ProxyResource.addMethod (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:493:29)",
+              "new ProxyResource (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:483:29)",
+              "RootResource.addProxy (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/resource.ts:191:12)",
+              "new LambdaRestApi (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/aws-apigateway/lib/lambda-api.ts:57:17)",
+              "new ApiStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/api.stack.ts:18:25)",
+              "new DemoStage (/home/barrokgl/learn/cdk-pipeline-demo/lib/demo.stage.ts:10:25)",
+              "new PipelineStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/pipeline.stack.ts:37:38)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/bin/demo.ts:9:1)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Module.m._compile (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:858:23)",
+              "Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Object.require.extensions.<computed> [as .ts] (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:861:12)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "main (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:227:14)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:513:3)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "/home/barrokgl/.nvm/versions/node/v12.19.0/lib/node_modules/npm/node_modules/libnpx/index.js:268:14"
+            ]
+          }
+        ],
+        "/pipeline/pre-prod/web-service/url": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "url",
+            "trace": [
+              "new ApiStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/api.stack.ts:24:26)",
+              "new DemoStage (/home/barrokgl/learn/cdk-pipeline-demo/lib/demo.stage.ts:10:25)",
+              "new PipelineStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/pipeline.stack.ts:37:38)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/bin/demo.ts:9:1)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Module.m._compile (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:858:23)",
+              "Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Object.require.extensions.<computed> [as .ts] (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:861:12)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "main (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:227:14)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:513:3)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "/home/barrokgl/.nvm/versions/node/v12.19.0/lib/node_modules/npm/node_modules/libnpx/index.js:268:14"
+            ]
+          }
+        ],
+        "/pipeline/pre-prod/web-service/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata",
+            "trace": [
+              "new MetadataResource (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/private/metadata-resource.ts:51:24)",
+              "/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/private/synthesis.ts:140:5",
+              "visit (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/private/synthesis.ts:200:5)",
+              "visit (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/private/synthesis.ts:196:5)",
+              "injectMetadataResources (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/private/synthesis.ts:131:3)",
+              "Object.synthesize (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/private/synthesis.ts:18:3)",
+              "DemoStage.synth (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/stage.ts:177:23)",
+              "CdkStage.addApplication (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/pipelines/lib/stage.ts:78:26)",
+              "CdkPipeline.addApplicationStage (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/pipelines/lib/pipeline.ts:251:11)",
+              "new PipelineStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/pipeline.stack.ts:37:18)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/bin/demo.ts:9:1)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Module.m._compile (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:858:23)",
+              "Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Object.require.extensions.<computed> [as .ts] (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:861:12)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "main (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:227:14)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:513:3)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "/home/barrokgl/.nvm/versions/node/v12.19.0/lib/node_modules/npm/node_modules/libnpx/index.js:268:14"
+            ]
+          }
+        ],
+        "/pipeline/pre-prod/web-service/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion",
+            "trace": [
+              "addBootstrapVersionRule (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/stack-synthesizers/default-synthesizer.ts:506:17)",
+              "DefaultStackSynthesizer.synthesize (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/stack-synthesizers/default-synthesizer.ts:336:7)",
+              "/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/private/synthesis.ts:157:29",
+              "visit (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/private/synthesis.ts:200:5)",
+              "visit (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/private/synthesis.ts:196:5)",
+              "synthesizeTree (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/private/synthesis.ts:150:3)",
+              "Object.synthesize (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/private/synthesis.ts:39:3)",
+              "DemoStage.synth (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/stage.ts:177:23)",
+              "CdkStage.addApplication (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/pipelines/lib/stage.ts:78:26)",
+              "CdkPipeline.addApplicationStage (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/pipelines/lib/pipeline.ts:251:11)",
+              "new PipelineStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/pipeline.stack.ts:37:18)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/bin/demo.ts:9:1)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Module.m._compile (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:858:23)",
+              "Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Object.require.extensions.<computed> [as .ts] (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:861:12)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "main (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:227:14)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:513:3)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "/home/barrokgl/.nvm/versions/node/v12.19.0/lib/node_modules/npm/node_modules/libnpx/index.js:268:14"
+            ]
+          }
+        ],
+        "/pipeline/pre-prod/web-service/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion",
+            "trace": [
+              "addBootstrapVersionRule (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/stack-synthesizers/default-synthesizer.ts:516:3)",
+              "DefaultStackSynthesizer.synthesize (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/stack-synthesizers/default-synthesizer.ts:336:7)",
+              "/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/private/synthesis.ts:157:29",
+              "visit (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/private/synthesis.ts:200:5)",
+              "visit (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/private/synthesis.ts:196:5)",
+              "synthesizeTree (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/private/synthesis.ts:150:3)",
+              "Object.synthesize (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/private/synthesis.ts:39:3)",
+              "DemoStage.synth (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/core/lib/stage.ts:177:23)",
+              "CdkStage.addApplication (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/pipelines/lib/stage.ts:78:26)",
+              "CdkPipeline.addApplicationStage (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/@aws-cdk/pipelines/lib/pipeline.ts:251:11)",
+              "new PipelineStack (/home/barrokgl/learn/cdk-pipeline-demo/lib/pipeline.stack.ts:37:18)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/bin/demo.ts:9:1)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Module.m._compile (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:858:23)",
+              "Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Object.require.extensions.<computed> [as .ts] (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/index.ts:861:12)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "main (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:227:14)",
+              "Object.<anonymous> (/home/barrokgl/learn/cdk-pipeline-demo/node_modules/ts-node/src/bin.ts:513:3)",
+              "Module._compile (internal/modules/cjs/loader.js:1015:30)",
+              "Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)",
+              "Module.load (internal/modules/cjs/loader.js:879:32)",
+              "Function.Module._load (internal/modules/cjs/loader.js:724:14)",
+              "Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)",
+              "/home/barrokgl/.nvm/versions/node/v12.19.0/lib/node_modules/npm/node_modules/libnpx/index.js:268:14"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

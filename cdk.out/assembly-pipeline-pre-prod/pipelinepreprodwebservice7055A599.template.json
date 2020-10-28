@@ -1,0 +1,478 @@
+{
+  "Resources": {
+    "lambdaServiceRole494E4CA6": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/pre-prod/web-service/lambda/ServiceRole/Resource"
+      }
+    },
+    "lambda8B5974B5": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": "cdk-hnb659fds-assets-982637769374-us-east-1",
+          "S3Key": "0e436e6713adc328a7e689ef84481a7a738c13eed4bd07b4b10c3bc2d200fbd6.zip"
+        },
+        "Handler": "handler.handler",
+        "Role": {
+          "Fn::GetAtt": [
+            "lambdaServiceRole494E4CA6",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs12.x"
+      },
+      "DependsOn": [
+        "lambdaServiceRole494E4CA6"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "pipeline/pre-prod/web-service/lambda/Resource",
+        "aws:asset:path": "asset.0e436e6713adc328a7e689ef84481a7a738c13eed4bd07b4b10c3bc2d200fbd6",
+        "aws:asset:property": "Code"
+      }
+    },
+    "restapi39D779F7": {
+      "Type": "AWS::ApiGateway::RestApi",
+      "Properties": {
+        "Description": "apigateway",
+        "Name": "rest-api"
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/pre-prod/web-service/rest-api/Resource"
+      }
+    },
+    "restapiCloudWatchRole2D9E2F10": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "apigateway.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+              ]
+            ]
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/pre-prod/web-service/rest-api/CloudWatchRole/Resource"
+      }
+    },
+    "restapiAccountC2304339": {
+      "Type": "AWS::ApiGateway::Account",
+      "Properties": {
+        "CloudWatchRoleArn": {
+          "Fn::GetAtt": [
+            "restapiCloudWatchRole2D9E2F10",
+            "Arn"
+          ]
+        }
+      },
+      "DependsOn": [
+        "restapi39D779F7"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "pipeline/pre-prod/web-service/rest-api/Account"
+      }
+    },
+    "restapiDeploymentD3722A4C6ba0ea2959d954e0f965171df1982e26": {
+      "Type": "AWS::ApiGateway::Deployment",
+      "Properties": {
+        "RestApiId": {
+          "Ref": "restapi39D779F7"
+        },
+        "Description": "Automatically created by the RestApi construct"
+      },
+      "DependsOn": [
+        "restapiproxyANY86DB073A",
+        "restapiproxyD63C125B",
+        "restapiANYA270F193"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "pipeline/pre-prod/web-service/rest-api/Deployment/Resource"
+      }
+    },
+    "restapiDeploymentStageprod0335F613": {
+      "Type": "AWS::ApiGateway::Stage",
+      "Properties": {
+        "RestApiId": {
+          "Ref": "restapi39D779F7"
+        },
+        "DeploymentId": {
+          "Ref": "restapiDeploymentD3722A4C6ba0ea2959d954e0f965171df1982e26"
+        },
+        "StageName": "prod"
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/pre-prod/web-service/rest-api/DeploymentStage.prod/Resource"
+      }
+    },
+    "restapiproxyD63C125B": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "restapi39D779F7",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "{proxy+}",
+        "RestApiId": {
+          "Ref": "restapi39D779F7"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/pre-prod/web-service/rest-api/Default/{proxy+}/Resource"
+      }
+    },
+    "restapiproxyANYApiPermissionpipelinepreprodwebservicerestapiDE70E343ANYproxyE5C6D001": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "lambda8B5974B5",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-1:982637769374:",
+              {
+                "Ref": "restapi39D779F7"
+              },
+              "/",
+              {
+                "Ref": "restapiDeploymentStageprod0335F613"
+              },
+              "/*/*"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/pre-prod/web-service/rest-api/Default/{proxy+}/ANY/ApiPermission.pipelinepreprodwebservicerestapiDE70E343.ANY..{proxy+}"
+      }
+    },
+    "restapiproxyANYApiPermissionTestpipelinepreprodwebservicerestapiDE70E343ANYproxy4B3FBDAB": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "lambda8B5974B5",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-1:982637769374:",
+              {
+                "Ref": "restapi39D779F7"
+              },
+              "/test-invoke-stage/*/*"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/pre-prod/web-service/rest-api/Default/{proxy+}/ANY/ApiPermission.Test.pipelinepreprodwebservicerestapiDE70E343.ANY..{proxy+}"
+      }
+    },
+    "restapiproxyANY86DB073A": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "ANY",
+        "ResourceId": {
+          "Ref": "restapiproxyD63C125B"
+        },
+        "RestApiId": {
+          "Ref": "restapi39D779F7"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "lambda8B5974B5",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/pre-prod/web-service/rest-api/Default/{proxy+}/ANY/Resource"
+      }
+    },
+    "restapiANYApiPermissionpipelinepreprodwebservicerestapiDE70E343ANYC53B96AB": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "lambda8B5974B5",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-1:982637769374:",
+              {
+                "Ref": "restapi39D779F7"
+              },
+              "/",
+              {
+                "Ref": "restapiDeploymentStageprod0335F613"
+              },
+              "/*/"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/pre-prod/web-service/rest-api/Default/ANY/ApiPermission.pipelinepreprodwebservicerestapiDE70E343.ANY.."
+      }
+    },
+    "restapiANYApiPermissionTestpipelinepreprodwebservicerestapiDE70E343ANY84B46106": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "lambda8B5974B5",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-1:982637769374:",
+              {
+                "Ref": "restapi39D779F7"
+              },
+              "/test-invoke-stage/*/"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/pre-prod/web-service/rest-api/Default/ANY/ApiPermission.Test.pipelinepreprodwebservicerestapiDE70E343.ANY.."
+      }
+    },
+    "restapiANYA270F193": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "ANY",
+        "ResourceId": {
+          "Fn::GetAtt": [
+            "restapi39D779F7",
+            "RootResourceId"
+          ]
+        },
+        "RestApiId": {
+          "Ref": "restapi39D779F7"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "lambda8B5974B5",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/pre-prod/web-service/rest-api/Default/ANY/Resource"
+      }
+    },
+    "CDKMetadata": {
+      "Type": "AWS::CDK::Metadata",
+      "Properties": {
+        "Modules": "aws-cdk=1.67.0,@aws-cdk/assets=1.70.0,@aws-cdk/aws-apigateway=1.70.0,@aws-cdk/aws-applicationautoscaling=1.70.0,@aws-cdk/aws-autoscaling=1.70.0,@aws-cdk/aws-autoscaling-common=1.70.0,@aws-cdk/aws-autoscaling-hooktargets=1.70.0,@aws-cdk/aws-cloudformation=1.70.0,@aws-cdk/aws-cloudwatch=1.70.0,@aws-cdk/aws-codebuild=1.70.0,@aws-cdk/aws-codeguruprofiler=1.70.0,@aws-cdk/aws-codepipeline=1.70.0,@aws-cdk/aws-codepipeline-actions=1.70.0,@aws-cdk/aws-ec2=1.70.0,@aws-cdk/aws-ecr=1.70.0,@aws-cdk/aws-ecr-assets=1.70.0,@aws-cdk/aws-ecs=1.70.0,@aws-cdk/aws-elasticloadbalancingv2=1.70.0,@aws-cdk/aws-events=1.70.0,@aws-cdk/aws-events-targets=1.70.0,@aws-cdk/aws-iam=1.70.0,@aws-cdk/aws-kms=1.70.0,@aws-cdk/aws-lambda=1.70.0,@aws-cdk/aws-logs=1.70.0,@aws-cdk/aws-s3=1.70.0,@aws-cdk/aws-s3-assets=1.70.0,@aws-cdk/aws-servicediscovery=1.70.0,@aws-cdk/aws-sns=1.70.0,@aws-cdk/aws-sns-subscriptions=1.70.0,@aws-cdk/aws-sqs=1.70.0,@aws-cdk/aws-ssm=1.70.0,@aws-cdk/cloud-assembly-schema=1.70.0,@aws-cdk/core=1.70.0,@aws-cdk/custom-resources=1.70.0,@aws-cdk/cx-api=1.70.0,@aws-cdk/pipelines=1.70.0,@aws-cdk/region-info=1.70.0,jsii-runtime=node.js/v12.19.0"
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/pre-prod/web-service/CDKMetadata/Default"
+      }
+    }
+  },
+  "Outputs": {
+    "restapiEndpointC67DEFEA": {
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            {
+              "Ref": "restapi39D779F7"
+            },
+            ".execute-api.us-east-1.",
+            {
+              "Ref": "AWS::URLSuffix"
+            },
+            "/",
+            {
+              "Ref": "restapiDeploymentStageprod0335F613"
+            },
+            "/"
+          ]
+        ]
+      }
+    },
+    "url": {
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            {
+              "Ref": "restapi39D779F7"
+            },
+            ".execute-api.us-east-1.",
+            {
+              "Ref": "AWS::URLSuffix"
+            },
+            "/",
+            {
+              "Ref": "restapiDeploymentStageprod0335F613"
+            },
+            "/"
+          ]
+        ]
+      }
+    }
+  },
+  "Parameters": {
+    "BootstrapVersion": {
+      "Type": "AWS::SSM::Parameter::Value<String>",
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store."
+    }
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3"
+                  ],
+                  {
+                    "Ref": "BootstrapVersion"
+                  }
+                ]
+              }
+            ]
+          },
+          "AssertDescription": "CDK bootstrap stack version 4 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+        }
+      ]
+    }
+  }
+}
