@@ -2,6 +2,7 @@ import {Construct, SecretValue, Stack, StackProps} from "@aws-cdk/core";
 import {Artifact} from "@aws-cdk/aws-codepipeline";
 import {CdkPipeline, SimpleSynthAction} from "@aws-cdk/pipelines";
 import {GitHubSourceAction} from "@aws-cdk/aws-codepipeline-actions";
+import {DemoStage} from "./demo.stage";
 
 export class PipelineStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
@@ -33,6 +34,11 @@ export class PipelineStack extends Stack {
             synthAction
         });
 
-
+        pipeline.addApplicationStage(new DemoStage(this, 'pre-prod', {
+           env: {
+               region: 'us-east-1',
+               account: '982637769374'
+           }
+        }));
     }
 }
