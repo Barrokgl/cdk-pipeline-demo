@@ -323,7 +323,7 @@
                   "Owner": "Barrokgl",
                   "Repo": "cdk-pipeline-demo",
                   "Branch": "master",
-                  "OAuthToken": "{{resolve:secretsmanager:github-token:SecretString:::}}",
+                  "OAuthToken": "{{resolve:secretsmanager:test-github-token:SecretString:::}}",
                   "PollForSourceChanges": false
                 },
                 "Name": "GithubSource",
@@ -437,7 +437,7 @@
       "Properties": {
         "Authentication": "GITHUB_HMAC",
         "AuthenticationConfiguration": {
-          "SecretToken": "{{resolve:secretsmanager:github-token:SecretString:::}}"
+          "SecretToken": "{{resolve:secretsmanager:test-github-token:SecretString:::}}"
         },
         "Filters": [
           {

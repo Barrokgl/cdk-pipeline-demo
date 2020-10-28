@@ -14,9 +14,10 @@ export class PipelineStack extends Stack {
         const sourceAction = new GitHubSourceAction({
             actionName: 'GithubSource',
             output: sourceArtifact,
-            oauthToken: SecretValue.secretsManager('github-token'),
+            oauthToken: SecretValue.secretsManager('test-github-token'),
             owner: 'Barrokgl',
-            repo: 'cdk-pipeline-demo'
+            repo: 'cdk-pipeline-demo',
+            branch: 'main'
         });
 
         const synthAction = SimpleSynthAction.standardNpmSynth({

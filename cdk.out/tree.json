@@ -386,7 +386,7 @@
                                   "Owner": "Barrokgl",
                                   "Repo": "cdk-pipeline-demo",
                                   "Branch": "master",
-                                  "OAuthToken": "{{resolve:secretsmanager:github-token:SecretString:::}}",
+                                  "OAuthToken": "{{resolve:secretsmanager:test-github-token:SecretString:::}}",
                                   "PollForSourceChanges": false
                                 },
                                 "runOrder": 1
@@ -498,7 +498,7 @@
                               "aws:cdk:cloudformation:props": {
                                 "authentication": "GITHUB_HMAC",
                                 "authenticationConfiguration": {
-                                  "secretToken": "{{resolve:secretsmanager:github-token:SecretString:::}}"
+                                  "secretToken": "{{resolve:secretsmanager:test-github-token:SecretString:::}}"
                                 },
                                 "filters": [
                                   {
