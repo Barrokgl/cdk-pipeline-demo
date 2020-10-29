@@ -65,7 +65,7 @@ export class PipelineStack extends Stack {
             actionName: 'iInvokeLambda',
             userParameters: {
                 param1: '1',
-                param2: '2'
+                param2: 'a'
             }
         }));
 
