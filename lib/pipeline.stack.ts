@@ -1,8 +1,9 @@
 import {Construct, SecretValue, Stack, StackProps} from "@aws-cdk/core";
 import {Artifact} from "@aws-cdk/aws-codepipeline";
 import {CdkPipeline, ShellScriptAction, SimpleSynthAction} from "@aws-cdk/pipelines";
-import {GitHubSourceAction} from "@aws-cdk/aws-codepipeline-actions";
+import {GitHubSourceAction, LambdaInvokeAction} from "@aws-cdk/aws-codepipeline-actions";
 import {DemoStage} from "./demo.stage";
+import {Code, Function, Runtime} from "@aws-cdk/aws-lambda";
 
 export class PipelineStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
@@ -52,5 +53,20 @@ export class PipelineStack extends Stack {
                 'curl -Ssf $ENDPOINT_URL'
             ]
         }));
+
+        const invokeLambda = new Function(this, 'invoke-lambda', {
+            runtime: Runtime.NODEJS_12_X,
+            handler: 'invoke-test.handler',
+            code: Code.fromAsset('lambda')
+        })
+
+        preProdStage.addActions(new LambdaInvokeAction({
+            lambda: invokeLambda,
+            actionName: 'iInvokeLambda',
+            userParameters: {
+                param1: '1',
+                param2: '2'
+            }
+        }))
     }
 }
