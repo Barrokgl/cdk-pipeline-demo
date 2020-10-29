@@ -1,0 +1,23 @@
+name: test
+
+on: push
+
+jobs:
+  test:
+    name: test repo
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Npm ci
+        run: npm ci
+
+      - name: Test
+        run: npm test
