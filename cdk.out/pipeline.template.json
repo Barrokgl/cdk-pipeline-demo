@@ -176,6 +176,65 @@
               "Effect": "Allow",
               "Principal": {
                 "AWS": {
+                  "Fn::GetAtt": [
+                    "PipelinepreprodTestServiceProjectRoleB30F67BC",
+                    "Arn"
+                  ]
+                }
+              },
+              "Resource": "*"
+            },
+            {
+              "Action": [
+                "kms:Decrypt",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*"
+              ],
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {
+                  "Fn::GetAtt": [
+                    "PipelinepreprodTestServiceProjectRoleB30F67BC",
+                    "Arn"
+                  ]
+                }
+              },
+              "Resource": "*"
+            },
+            {
+              "Action": [
+                "kms:Decrypt",
+                "kms:DescribeKey"
+              ],
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":iam::982637769374:role/cdk-hnb659fds-deploy-role-982637769374-us-east-1"
+                    ]
+                  ]
+                }
+              },
+              "Resource": "*"
+            },
+            {
+              "Action": [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*"
+              ],
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {
                   "Fn::Join": [
                     "",
                     [
@@ -261,6 +320,53 @@
                 "s3:GetObject*",
                 "s3:GetBucket*",
                 "s3:List*"
+              ],
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":iam::982637769374:role/cdk-hnb659fds-deploy-role-982637769374-us-east-1"
+                    ]
+                  ]
+                }
+              },
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "PipelineArtifactsBucketAEA9A052",
+                    "Arn"
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "PipelineArtifactsBucketAEA9A052",
+                          "Arn"
+                        ]
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+                "s3:PutObject*",
+                "s3:Abort*"
               ],
               "Effect": "Allow",
               "Principal": {
@@ -408,6 +514,36 @@
               "Resource": {
                 "Fn::GetAtt": [
                   "PipelineAssetsFileRole59943A77",
+                  "Arn"
+                ]
+              }
+            },
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "PipelinepreprodTestServiceCodePipelineActionRoleCB2B1BB0",
+                  "Arn"
+                ]
+              }
+            },
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "PipelinepreprodiInvokeLambdaCodePipelineActionRoleFCAA0165",
+                  "Arn"
+                ]
+              }
+            },
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "PipelinepreprodApproveCodePipelineActionRole8366A821",
                   "Arn"
                 ]
               }
@@ -582,6 +718,70 @@
             "Actions": [
               {
                 "ActionTypeId": {
+                  "Category": "Build",
+                  "Owner": "AWS",
+                  "Provider": "CodeBuild",
+                  "Version": "1"
+                },
+                "Configuration": {
+                  "ProjectName": {
+                    "Ref": "PipelinepreprodTestServiceProject6AC96F8D"
+                  }
+                },
+                "InputArtifacts": [
+                  {
+                    "Name": "Artifact_pipelinepreprodwebservice7055A599_Outputs"
+                  }
+                ],
+                "Name": "TestService",
+                "RoleArn": {
+                  "Fn::GetAtt": [
+                    "PipelinepreprodTestServiceCodePipelineActionRoleCB2B1BB0",
+                    "Arn"
+                  ]
+                },
+                "RunOrder": 100
+              },
+              {
+                "ActionTypeId": {
+                  "Category": "Invoke",
+                  "Owner": "AWS",
+                  "Provider": "Lambda",
+                  "Version": "1"
+                },
+                "Configuration": {
+                  "FunctionName": {
+                    "Ref": "invokelambda129409D0"
+                  },
+                  "UserParameters": "{\"param1\":\"1\",\"param2\":\"2\"}"
+                },
+                "Name": "iInvokeLambda",
+                "RoleArn": {
+                  "Fn::GetAtt": [
+                    "PipelinepreprodiInvokeLambdaCodePipelineActionRoleFCAA0165",
+                    "Arn"
+                  ]
+                },
+                "RunOrder": 1
+              },
+              {
+                "ActionTypeId": {
+                  "Category": "Approval",
+                  "Owner": "AWS",
+                  "Provider": "Manual",
+                  "Version": "1"
+                },
+                "Name": "Approve",
+                "RoleArn": {
+                  "Fn::GetAtt": [
+                    "PipelinepreprodApproveCodePipelineActionRole8366A821",
+                    "Arn"
+                  ]
+                },
+                "RunOrder": 3
+              },
+              {
+                "ActionTypeId": {
                   "Category": "Deploy",
                   "Owner": "AWS",
                   "Provider": "CloudFormation",
@@ -635,10 +835,16 @@
                 },
                 "Configuration": {
                   "StackName": "pre-prod-web-service",
+                  "OutputFileName": "outputs.json",
                   "ActionMode": "CHANGE_SET_EXECUTE",
                   "ChangeSetName": "PipelineChange"
                 },
                 "Name": "web-service.Deploy",
+                "OutputArtifacts": [
+                  {
+                    "Name": "Artifact_pipelinepreprodwebservice7055A599_Outputs"
+                  }
+                ],
                 "RoleArn": {
                   "Fn::Join": [
                     "",
@@ -1058,6 +1264,387 @@
         "aws:cdk:path": "pipeline/Pipeline/Pipeline/UpdatePipeline/SelfMutate/CodePipelineActionRole/DefaultPolicy/Resource"
       }
     },
+    "PipelinepreprodTestServiceCodePipelineActionRoleCB2B1BB0": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":iam::",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":root"
+                    ]
+                  ]
+                }
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/Pipeline/Pipeline/pre-prod/TestService/CodePipelineActionRole/Resource"
+      }
+    },
+    "PipelinepreprodTestServiceCodePipelineActionRoleDefaultPolicy4C95D464": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "codebuild:BatchGetBuilds",
+                "codebuild:StartBuild",
+                "codebuild:StopBuild"
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "PipelinepreprodTestServiceProject6AC96F8D",
+                  "Arn"
+                ]
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "PipelinepreprodTestServiceCodePipelineActionRoleDefaultPolicy4C95D464",
+        "Roles": [
+          {
+            "Ref": "PipelinepreprodTestServiceCodePipelineActionRoleCB2B1BB0"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/Pipeline/Pipeline/pre-prod/TestService/CodePipelineActionRole/DefaultPolicy/Resource"
+      }
+    },
+    "PipelinepreprodTestServiceProjectRoleB30F67BC": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "codebuild.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/Pipeline/Pipeline/pre-prod/TestService/Project/Role/Resource"
+      }
+    },
+    "PipelinepreprodTestServiceProjectRoleDefaultPolicyB3710A71": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":logs:us-east-1:",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":log-group:/aws/codebuild/",
+                      {
+                        "Ref": "PipelinepreprodTestServiceProject6AC96F8D"
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":logs:us-east-1:",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":log-group:/aws/codebuild/",
+                      {
+                        "Ref": "PipelinepreprodTestServiceProject6AC96F8D"
+                      },
+                      ":*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": [
+                "codebuild:CreateReportGroup",
+                "codebuild:CreateReport",
+                "codebuild:UpdateReport",
+                "codebuild:BatchPutTestCases",
+                "codebuild:BatchPutCodeCoverages"
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":codebuild:us-east-1:",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":report-group/",
+                    {
+                      "Ref": "PipelinepreprodTestServiceProject6AC96F8D"
+                    },
+                    "-*"
+                  ]
+                ]
+              }
+            },
+            {
+              "Action": [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*"
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "PipelineArtifactsBucketAEA9A052",
+                    "Arn"
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "PipelineArtifactsBucketAEA9A052",
+                          "Arn"
+                        ]
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Action": [
+                "kms:Decrypt",
+                "kms:DescribeKey"
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "PipelineArtifactsBucketEncryptionKeyF5BF0670",
+                  "Arn"
+                ]
+              }
+            },
+            {
+              "Action": [
+                "kms:Decrypt",
+                "kms:Encrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*"
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "PipelineArtifactsBucketEncryptionKeyF5BF0670",
+                  "Arn"
+                ]
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "PipelinepreprodTestServiceProjectRoleDefaultPolicyB3710A71",
+        "Roles": [
+          {
+            "Ref": "PipelinepreprodTestServiceProjectRoleB30F67BC"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/Pipeline/Pipeline/pre-prod/TestService/Project/Role/DefaultPolicy/Resource"
+      }
+    },
+    "PipelinepreprodTestServiceProject6AC96F8D": {
+      "Type": "AWS::CodeBuild::Project",
+      "Properties": {
+        "Artifacts": {
+          "Type": "CODEPIPELINE"
+        },
+        "Environment": {
+          "ComputeType": "BUILD_GENERAL1_SMALL",
+          "Image": "aws/codebuild/standard:4.0",
+          "PrivilegedMode": false,
+          "Type": "LINUX_CONTAINER"
+        },
+        "ServiceRole": {
+          "Fn::GetAtt": [
+            "PipelinepreprodTestServiceProjectRoleB30F67BC",
+            "Arn"
+          ]
+        },
+        "Source": {
+          "BuildSpec": "{\n  \"version\": \"0.2\",\n  \"phases\": {\n    \"build\": {\n      \"commands\": [\n        \"set -eu\",\n        \"export ENDPOINT_URL=\\\"$(node -pe 'require(process.env.CODEBUILD_SRC_DIR + \\\"/outputs.json\\\")[\\\"url\\\"]')\\\"\",\n        \"curl -Ssf $ENDPOINT_URL\"\n      ]\n    }\n  }\n}",
+          "Type": "CODEPIPELINE"
+        },
+        "EncryptionKey": {
+          "Fn::GetAtt": [
+            "PipelineArtifactsBucketEncryptionKeyF5BF0670",
+            "Arn"
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/Pipeline/Pipeline/pre-prod/TestService/Project/Resource"
+      }
+    },
+    "PipelinepreprodiInvokeLambdaCodePipelineActionRoleFCAA0165": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":iam::",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":root"
+                    ]
+                  ]
+                }
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/Pipeline/Pipeline/pre-prod/iInvokeLambda/CodePipelineActionRole/Resource"
+      }
+    },
+    "PipelinepreprodiInvokeLambdaCodePipelineActionRoleDefaultPolicyE3069F95": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "lambda:ListFunctions",
+              "Effect": "Allow",
+              "Resource": "*"
+            },
+            {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "invokelambda129409D0",
+                  "Arn"
+                ]
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "PipelinepreprodiInvokeLambdaCodePipelineActionRoleDefaultPolicyE3069F95",
+        "Roles": [
+          {
+            "Ref": "PipelinepreprodiInvokeLambdaCodePipelineActionRoleFCAA0165"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/Pipeline/Pipeline/pre-prod/iInvokeLambda/CodePipelineActionRole/DefaultPolicy/Resource"
+      }
+    },
+    "PipelinepreprodApproveCodePipelineActionRole8366A821": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":iam::",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":root"
+                    ]
+                  ]
+                }
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/Pipeline/Pipeline/pre-prod/Approve/CodePipelineActionRole/Resource"
+      }
+    },
     "PipelineUpdatePipelineSelfMutationRole57E559E8": {
       "Type": "AWS::IAM::Role",
       "Properties": {
@@ -1467,7 +2054,7 @@
           ]
         },
         "Source": {
-          "BuildSpec": "{\n  \"version\": \"0.2\",\n  \"phases\": {\n    \"install\": {\n      \"commands\": \"npm install -g cdk-assets\"\n    },\n    \"build\": {\n      \"commands\": [\n        \"cdk-assets --path \\\"assembly-pipeline-pre-prod/pipelinepreprodwebservice7055A599.assets.json\\\" --verbose publish \\\"0e436e6713adc328a7e689ef84481a7a738c13eed4bd07b4b10c3bc2d200fbd6:982637769374-us-east-1\\\"\"\n      ]\n    }\n  }\n}",
+          "BuildSpec": "{\n  \"version\": \"0.2\",\n  \"phases\": {\n    \"install\": {\n      \"commands\": \"npm install -g cdk-assets\"\n    },\n    \"build\": {\n      \"commands\": [\n        \"cdk-assets --path \\\"assembly-pipeline-pre-prod/pipelinepreprodwebservice7055A599.assets.json\\\" --verbose publish \\\"8b33638d3abb7fc16680c9b2eeb72a2b5171824f988c03388d924f4469e1f583:982637769374-us-east-1\\\"\"\n      ]\n    }\n  }\n}",
           "Type": "CODEPIPELINE"
         },
         "EncryptionKey": {
@@ -1479,6 +2066,95 @@
       },
       "Metadata": {
         "aws:cdk:path": "pipeline/Pipeline/Assets/FileAsset1/Default/Resource"
+      }
+    },
+    "invokelambdaServiceRoleEC6D15F2": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/invoke-lambda/ServiceRole/Resource"
+      }
+    },
+    "invokelambdaServiceRoleDefaultPolicyEFE74C64": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "codepipeline:PutJobSuccessResult",
+                "codepipeline:PutJobFailureResult"
+              ],
+              "Effect": "Allow",
+              "Resource": "*"
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "invokelambdaServiceRoleDefaultPolicyEFE74C64",
+        "Roles": [
+          {
+            "Ref": "invokelambdaServiceRoleEC6D15F2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/invoke-lambda/ServiceRole/DefaultPolicy/Resource"
+      }
+    },
+    "invokelambda129409D0": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-us-east-1"
+          },
+          "S3Key": "8b33638d3abb7fc16680c9b2eeb72a2b5171824f988c03388d924f4469e1f583.zip"
+        },
+        "Handler": "invoke-test.handler",
+        "Role": {
+          "Fn::GetAtt": [
+            "invokelambdaServiceRoleEC6D15F2",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs12.x"
+      },
+      "DependsOn": [
+        "invokelambdaServiceRoleDefaultPolicyEFE74C64",
+        "invokelambdaServiceRoleEC6D15F2"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "pipeline/invoke-lambda/Resource",
+        "aws:asset:path": "asset.8b33638d3abb7fc16680c9b2eeb72a2b5171824f988c03388d924f4469e1f583",
+        "aws:asset:property": "Code"
       }
     },
     "CDKMetadata": {

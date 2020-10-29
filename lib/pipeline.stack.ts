@@ -1,7 +1,7 @@
 import {Construct, SecretValue, Stack, StackProps} from "@aws-cdk/core";
 import {Artifact} from "@aws-cdk/aws-codepipeline";
 import {CdkPipeline, ShellScriptAction, SimpleSynthAction} from "@aws-cdk/pipelines";
-import {GitHubSourceAction, LambdaInvokeAction} from "@aws-cdk/aws-codepipeline-actions";
+import {GitHubSourceAction, LambdaInvokeAction, ManualApprovalAction} from "@aws-cdk/aws-codepipeline-actions";
 import {DemoStage} from "./demo.stage";
 import {Code, Function, Runtime} from "@aws-cdk/aws-lambda";
 
@@ -67,6 +67,11 @@ export class PipelineStack extends Stack {
                 param1: '1',
                 param2: '2'
             }
-        }))
+        }));
+
+        // preProdStage.addActions(new ManualApprovalAction({
+        //     runOrder: 3,
+        //     actionName: 'Approve'
+        // }));
     }
 }

@@ -1,2 +1,2 @@
-import { APIGatewayProxyResult, CodePipelineEvent, Context } from "aws-lambda";
-export declare function handler(event: CodePipelineEvent, context: Context): Promise<APIGatewayProxyResult>;
+import { CodePipelineEvent, Context } from "aws-lambda";
+export declare function handler(event: CodePipelineEvent, context: Context): Promise<void>;

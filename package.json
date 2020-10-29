@@ -28,6 +28,7 @@
     "@aws-cdk/aws-lambda": "1.70.0",
     "@aws-cdk/core": "1.70.0",
     "@aws-cdk/pipelines": "1.70.0",
-    "source-map-support": "^0.5.16"
+    "source-map-support": "^0.5.16",
+    "aws-sdk": "^2.781.0"
   }
 }
