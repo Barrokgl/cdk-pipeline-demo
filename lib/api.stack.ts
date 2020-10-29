@@ -12,7 +12,7 @@ export class ApiStack extends Stack {
         const handler = new Function(this, 'lambda', {
             runtime: Runtime.NODEJS_12_X,
             handler: 'handler.handler',
-            code: Code.fromAsset('lib/lambda')
+            code: Code.fromAsset('lambda')
         });
 
         const gateway = new LambdaRestApi(this, 'rest-api', {
