@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.handler = void 0;
+async function handler(event, context) {
+    return {
+        body: 'Hello from invoke',
+        statusCode: 200,
+    };
+}
+exports.handler = handler;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW52b2tlLXRlc3QuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJpbnZva2UtdGVzdC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFFTyxLQUFLLFVBQVUsT0FBTyxDQUFDLEtBQXdCLEVBQUUsT0FBZ0I7SUFDcEUsT0FBTztRQUNILElBQUksRUFBRSxtQkFBbUI7UUFDekIsVUFBVSxFQUFFLEdBQUc7S0FDbEIsQ0FBQztBQUNOLENBQUM7QUFMRCwwQkFLQyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7QVBJR2F0ZXdheVByb3h5RXZlbnQsIEFQSUdhdGV3YXlQcm94eVJlc3VsdCwgQ29kZVBpcGVsaW5lRXZlbnQsIENvbnRleHR9IGZyb20gXCJhd3MtbGFtYmRhXCI7XG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBoYW5kbGVyKGV2ZW50OiBDb2RlUGlwZWxpbmVFdmVudCwgY29udGV4dDogQ29udGV4dCk6IFByb21pc2U8QVBJR2F0ZXdheVByb3h5UmVzdWx0PntcbiAgICByZXR1cm4ge1xuICAgICAgICBib2R5OiAnSGVsbG8gZnJvbSBpbnZva2UnLFxuICAgICAgICBzdGF0dXNDb2RlOiAyMDAsXG4gICAgfTtcbn1cbiJdfQ==
