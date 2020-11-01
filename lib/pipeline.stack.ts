@@ -31,18 +31,20 @@ export class PipelineStack extends Stack {
                 branch: 'main'
             })
             .addStage(preProd)
-            .addAction((pipeline) => new ShellScriptAction({
+            .addAction((pipeline, nextRunOrder) => new ShellScriptAction({
                 actionName: 'TestService',
                 useOutputs: {
                     ENDPOINT_URL: pipeline.stackOutput(preProd.urlOutput)
                 },
                 commands: [
                     'curl -Ssf $ENDPOINT_URL'
-                ]
+                ],
+                runOrder: nextRunOrder
             }))
             .addInvokeLambdaAction(invokeLambda)
-            .addAction(() => new ManualApprovalAction({
-                actionName: 'Approve'
+            .addAction((_, nextRunOrder) => new ManualApprovalAction({
+                actionName: 'Approve',
+                runOrder: nextRunOrder
             }))
             .build();
     }

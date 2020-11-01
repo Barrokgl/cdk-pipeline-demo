@@ -39,7 +39,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "cdk-hnb659fds-assets-982637769374-us-east-1",
-          "S3Key": "8d8a897491805903dc88d299a2a26cb47d0c46f2b3b9436c7eca220c85ce5c01.zip"
+          "S3Key": "6362d9e961b868d4cd35d14920bfe4fb2fc2b5e22eb13db23dc531ea3ebdd610.zip"
         },
         "Handler": "handler.handler",
         "Role": {
@@ -55,7 +55,7 @@
       ],
       "Metadata": {
         "aws:cdk:path": "pipeline/pre-prod/web-service/lambda/Resource",
-        "aws:asset:path": "asset.8d8a897491805903dc88d299a2a26cb47d0c46f2b3b9436c7eca220c85ce5c01",
+        "aws:asset:path": "asset.6362d9e961b868d4cd35d14920bfe4fb2fc2b5e22eb13db23dc531ea3ebdd610",
         "aws:asset:property": "Code"
       }
     },
