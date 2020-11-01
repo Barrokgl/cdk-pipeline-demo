@@ -5,7 +5,7 @@ const pipeline = new AWS.CodePipeline();
 
 const putJobSuccess = function(jobId: string, message: string, context: Context) {
     const params = {
-        jobId: jobId
+        jobId
     };
     pipeline.putJobSuccessResult(params, function(err, data) {
         if(err) {
@@ -18,7 +18,7 @@ const putJobSuccess = function(jobId: string, message: string, context: Context)
 
 const putJobFailure = function(jobId: string, message: string, context: Context) {
     const params = {
-        jobId: jobId,
+        jobId,
         failureDetails: {
             message: JSON.stringify(message),
             type: 'JobFailed',
