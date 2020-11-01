@@ -1,12 +1,15 @@
 import {APIGatewayProxyEvent, APIGatewayProxyResult, CodePipelineEvent, Context} from "aws-lambda";
 import * as AWS from 'aws-sdk';
 
-const pipeline = new AWS.CodePipeline();
+const pipeline = new AWS.CodePipeline({
+    region: 'us-east-1',
+});
 
 const putJobSuccess = function(jobId: string, message: string, context: Context) {
     const params = {
         jobId
     };
+    console.log('pre put jo success');
     pipeline.putJobSuccessResult(params, function(err, data) {
         console.log('put job success', err, data);
 

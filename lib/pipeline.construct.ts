@@ -91,6 +91,7 @@ export class PipelineConstruct {
 
         if (this.stage !== undefined) {
             const appStage = this.pipeline.addApplicationStage(this.stage);
+            appStage.nextSequentialRunOrder()
             this.actions.forEach(f => {
                 appStage.addActions(f(this.pipeline, appStage.nextSequentialRunOrder()))
             });
