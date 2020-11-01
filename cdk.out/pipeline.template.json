@@ -1,5 +1,94 @@
 {
   "Resources": {
+    "invokelambdaServiceRoleEC6D15F2": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/invoke-lambda/ServiceRole/Resource"
+      }
+    },
+    "invokelambdaServiceRoleDefaultPolicyEFE74C64": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "codepipeline:PutJobSuccessResult",
+                "codepipeline:PutJobFailureResult"
+              ],
+              "Effect": "Allow",
+              "Resource": "*"
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "invokelambdaServiceRoleDefaultPolicyEFE74C64",
+        "Roles": [
+          {
+            "Ref": "invokelambdaServiceRoleEC6D15F2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/invoke-lambda/ServiceRole/DefaultPolicy/Resource"
+      }
+    },
+    "invokelambda129409D0": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-us-east-1"
+          },
+          "S3Key": "8d8a897491805903dc88d299a2a26cb47d0c46f2b3b9436c7eca220c85ce5c01.zip"
+        },
+        "Handler": "invoke-test.handler",
+        "Role": {
+          "Fn::GetAtt": [
+            "invokelambdaServiceRoleEC6D15F2",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs12.x"
+      },
+      "DependsOn": [
+        "invokelambdaServiceRoleDefaultPolicyEFE74C64",
+        "invokelambdaServiceRoleEC6D15F2"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "pipeline/invoke-lambda/Resource",
+        "aws:asset:path": "asset.8d8a897491805903dc88d299a2a26cb47d0c46f2b3b9436c7eca220c85ce5c01",
+        "aws:asset:property": "Code"
+      }
+    },
     "PipelineArtifactsBucketEncryptionKeyF5BF0670": {
       "Type": "AWS::KMS::Key",
       "Properties": {
@@ -533,7 +622,7 @@
               "Effect": "Allow",
               "Resource": {
                 "Fn::GetAtt": [
-                  "PipelinepreprodiInvokeLambdaCodePipelineActionRoleFCAA0165",
+                  "PipelinepreprodInvokeLambdaCodePipelineActionRole137A8530",
                   "Arn"
                 ]
               }
@@ -752,17 +841,16 @@
                 "Configuration": {
                   "FunctionName": {
                     "Ref": "invokelambda129409D0"
-                  },
-                  "UserParameters": "{\"param1\":\"1\",\"param2\":\"2\"}"
+                  }
                 },
-                "Name": "iInvokeLambda",
+                "Name": "InvokeLambda",
                 "RoleArn": {
                   "Fn::GetAtt": [
-                    "PipelinepreprodiInvokeLambdaCodePipelineActionRoleFCAA0165",
+                    "PipelinepreprodInvokeLambdaCodePipelineActionRole137A8530",
                     "Arn"
                   ]
                 },
-                "RunOrder": 1
+                "RunOrder": 4
               },
               {
                 "ActionTypeId": {
@@ -778,7 +866,7 @@
                     "Arn"
                   ]
                 },
-                "RunOrder": 3
+                "RunOrder": 1
               },
               {
                 "ActionTypeId": {
@@ -878,7 +966,7 @@
           },
           "Type": "S3"
         },
-        "Name": "demo-pipeline",
+        "Name": "Pipeline",
         "RestartExecutionOnUpdate": true
       },
       "DependsOn": [
@@ -1541,7 +1629,7 @@
         "aws:cdk:path": "pipeline/Pipeline/Pipeline/pre-prod/TestService/Project/Resource"
       }
     },
-    "PipelinepreprodiInvokeLambdaCodePipelineActionRoleFCAA0165": {
+    "PipelinepreprodInvokeLambdaCodePipelineActionRole137A8530": {
       "Type": "AWS::IAM::Role",
       "Properties": {
         "AssumeRolePolicyDocument": {
@@ -1573,10 +1661,10 @@
         }
       },
       "Metadata": {
-        "aws:cdk:path": "pipeline/Pipeline/Pipeline/pre-prod/iInvokeLambda/CodePipelineActionRole/Resource"
+        "aws:cdk:path": "pipeline/Pipeline/Pipeline/pre-prod/InvokeLambda/CodePipelineActionRole/Resource"
       }
     },
-    "PipelinepreprodiInvokeLambdaCodePipelineActionRoleDefaultPolicyE3069F95": {
+    "PipelinepreprodInvokeLambdaCodePipelineActionRoleDefaultPolicy9DA4910A": {
       "Type": "AWS::IAM::Policy",
       "Properties": {
         "PolicyDocument": {
@@ -1599,15 +1687,15 @@
           ],
           "Version": "2012-10-17"
         },
-        "PolicyName": "PipelinepreprodiInvokeLambdaCodePipelineActionRoleDefaultPolicyE3069F95",
+        "PolicyName": "PipelinepreprodInvokeLambdaCodePipelineActionRoleDefaultPolicy9DA4910A",
         "Roles": [
           {
-            "Ref": "PipelinepreprodiInvokeLambdaCodePipelineActionRoleFCAA0165"
+            "Ref": "PipelinepreprodInvokeLambdaCodePipelineActionRole137A8530"
           }
         ]
       },
       "Metadata": {
-        "aws:cdk:path": "pipeline/Pipeline/Pipeline/pre-prod/iInvokeLambda/CodePipelineActionRole/DefaultPolicy/Resource"
+        "aws:cdk:path": "pipeline/Pipeline/Pipeline/pre-prod/InvokeLambda/CodePipelineActionRole/DefaultPolicy/Resource"
       }
     },
     "PipelinepreprodApproveCodePipelineActionRole8366A821": {
@@ -1867,7 +1955,7 @@
             "Arn"
           ]
         },
-        "Name": "demo-pipeline-selfupdate"
+        "Name": "Pipeline-selfupdate"
       },
       "Metadata": {
         "aws:cdk:path": "pipeline/Pipeline/UpdatePipeline/SelfMutation/Resource"
@@ -2054,7 +2142,7 @@
           ]
         },
         "Source": {
-          "BuildSpec": "{\n  \"version\": \"0.2\",\n  \"phases\": {\n    \"install\": {\n      \"commands\": \"npm install -g cdk-assets\"\n    },\n    \"build\": {\n      \"commands\": [\n        \"cdk-assets --path \\\"assembly-pipeline-pre-prod/pipelinepreprodwebservice7055A599.assets.json\\\" --verbose publish \\\"8b33638d3abb7fc16680c9b2eeb72a2b5171824f988c03388d924f4469e1f583:982637769374-us-east-1\\\"\"\n      ]\n    }\n  }\n}",
+          "BuildSpec": "{\n  \"version\": \"0.2\",\n  \"phases\": {\n    \"install\": {\n      \"commands\": \"npm install -g cdk-assets\"\n    },\n    \"build\": {\n      \"commands\": [\n        \"cdk-assets --path \\\"assembly-pipeline-pre-prod/pipelinepreprodwebservice7055A599.assets.json\\\" --verbose publish \\\"8d8a897491805903dc88d299a2a26cb47d0c46f2b3b9436c7eca220c85ce5c01:982637769374-us-east-1\\\"\"\n      ]\n    }\n  }\n}",
           "Type": "CODEPIPELINE"
         },
         "EncryptionKey": {
@@ -2066,95 +2154,6 @@
       },
       "Metadata": {
         "aws:cdk:path": "pipeline/Pipeline/Assets/FileAsset1/Default/Resource"
-      }
-    },
-    "invokelambdaServiceRoleEC6D15F2": {
-      "Type": "AWS::IAM::Role",
-      "Properties": {
-        "AssumeRolePolicyDocument": {
-          "Statement": [
-            {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": {
-                "Service": "lambda.amazonaws.com"
-              }
-            }
-          ],
-          "Version": "2012-10-17"
-        },
-        "ManagedPolicyArns": [
-          {
-            "Fn::Join": [
-              "",
-              [
-                "arn:",
-                {
-                  "Ref": "AWS::Partition"
-                },
-                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-              ]
-            ]
-          }
-        ]
-      },
-      "Metadata": {
-        "aws:cdk:path": "pipeline/invoke-lambda/ServiceRole/Resource"
-      }
-    },
-    "invokelambdaServiceRoleDefaultPolicyEFE74C64": {
-      "Type": "AWS::IAM::Policy",
-      "Properties": {
-        "PolicyDocument": {
-          "Statement": [
-            {
-              "Action": [
-                "codepipeline:PutJobSuccessResult",
-                "codepipeline:PutJobFailureResult"
-              ],
-              "Effect": "Allow",
-              "Resource": "*"
-            }
-          ],
-          "Version": "2012-10-17"
-        },
-        "PolicyName": "invokelambdaServiceRoleDefaultPolicyEFE74C64",
-        "Roles": [
-          {
-            "Ref": "invokelambdaServiceRoleEC6D15F2"
-          }
-        ]
-      },
-      "Metadata": {
-        "aws:cdk:path": "pipeline/invoke-lambda/ServiceRole/DefaultPolicy/Resource"
-      }
-    },
-    "invokelambda129409D0": {
-      "Type": "AWS::Lambda::Function",
-      "Properties": {
-        "Code": {
-          "S3Bucket": {
-            "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-us-east-1"
-          },
-          "S3Key": "8b33638d3abb7fc16680c9b2eeb72a2b5171824f988c03388d924f4469e1f583.zip"
-        },
-        "Handler": "invoke-test.handler",
-        "Role": {
-          "Fn::GetAtt": [
-            "invokelambdaServiceRoleEC6D15F2",
-            "Arn"
-          ]
-        },
-        "Runtime": "nodejs12.x"
-      },
-      "DependsOn": [
-        "invokelambdaServiceRoleDefaultPolicyEFE74C64",
-        "invokelambdaServiceRoleEC6D15F2"
-      ],
-      "Metadata": {
-        "aws:cdk:path": "pipeline/invoke-lambda/Resource",
-        "aws:asset:path": "asset.8b33638d3abb7fc16680c9b2eeb72a2b5171824f988c03388d924f4469e1f583",
-        "aws:asset:property": "Code"
       }
     },
     "CDKMetadata": {

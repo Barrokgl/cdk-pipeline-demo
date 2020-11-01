@@ -30,20 +30,20 @@ export class PipelineStack extends Stack {
                 repo: 'cdk-pipeline-demo',
                 branch: 'main'
             })
-            // .addStage(preProd)
-            // .addAction((pipeline) => new ShellScriptAction({
-            //     actionName: 'TestService',
-            //     useOutputs: {
-            //         ENDPOINT_URL: pipeline.stackOutput(preProd.urlOutput)
-            //     },
-            //     commands: [
-            //         'curl -Ssf $ENDPOINT_URL'
-            //     ]
-            // }))
-            // .addInvokeLambdaAction(invokeLambda)
-            // .addAction(() => new ManualApprovalAction({
-            //     actionName: 'Approve'
-            // }))
+            .addStage(preProd)
+            .addAction((pipeline) => new ShellScriptAction({
+                actionName: 'TestService',
+                useOutputs: {
+                    ENDPOINT_URL: pipeline.stackOutput(preProd.urlOutput)
+                },
+                commands: [
+                    'curl -Ssf $ENDPOINT_URL'
+                ]
+            }))
+            .addInvokeLambdaAction(invokeLambda)
+            .addAction(() => new ManualApprovalAction({
+                actionName: 'Approve'
+            }))
             .build();
     }
 }
