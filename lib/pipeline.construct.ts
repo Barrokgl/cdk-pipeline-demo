@@ -72,7 +72,7 @@ export class PipelineConstruct {
     }
 
     addAction(fun: (pipeline: CdkPipeline, nextRunOrder: number) => IAction) {
-        this.actions.push(fun)
+        this.actions.push(fun);
         return this;
     }
 

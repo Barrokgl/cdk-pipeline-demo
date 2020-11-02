@@ -602,6 +602,16 @@
               "Effect": "Allow",
               "Resource": {
                 "Fn::GetAtt": [
+                  "PipelinePreDeployPreDeployApproveCodePipelineActionRole3C725008",
+                  "Arn"
+                ]
+              }
+            },
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
                   "PipelineAssetsFileRole59943A77",
                   "Arn"
                 ]
@@ -689,7 +699,7 @@
                 "Configuration": {
                   "Owner": "Barrokgl",
                   "Repo": "cdk-pipeline-demo",
-                  "Branch": "main",
+                  "Branch": "feature/*",
                   "OAuthToken": "{{resolve:secretsmanager:test-github-token:SecretString:::}}",
                   "PollForSourceChanges": false
                 },
@@ -802,6 +812,27 @@
               }
             ],
             "Name": "Assets"
+          },
+          {
+            "Actions": [
+              {
+                "ActionTypeId": {
+                  "Category": "Approval",
+                  "Owner": "AWS",
+                  "Provider": "Manual",
+                  "Version": "1"
+                },
+                "Name": "PreDeployApprove",
+                "RoleArn": {
+                  "Fn::GetAtt": [
+                    "PipelinePreDeployPreDeployApproveCodePipelineActionRole3C725008",
+                    "Arn"
+                  ]
+                },
+                "RunOrder": 1
+              }
+            ],
+            "Name": "PreDeploy"
           },
           {
             "Actions": [
@@ -1350,6 +1381,41 @@
       },
       "Metadata": {
         "aws:cdk:path": "pipeline/Pipeline/Pipeline/UpdatePipeline/SelfMutate/CodePipelineActionRole/DefaultPolicy/Resource"
+      }
+    },
+    "PipelinePreDeployPreDeployApproveCodePipelineActionRole3C725008": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":iam::",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":root"
+                    ]
+                  ]
+                }
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "pipeline/Pipeline/Pipeline/PreDeploy/PreDeployApprove/CodePipelineActionRole/Resource"
       }
     },
     "PipelinepreprodTestServiceCodePipelineActionRoleCB2B1BB0": {

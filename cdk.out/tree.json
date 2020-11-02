@@ -1189,6 +1189,16 @@
                                       "Effect": "Allow",
                                       "Resource": {
                                         "Fn::GetAtt": [
+                                          "PipelinePreDeployPreDeployApproveCodePipelineActionRole3C725008",
+                                          "Arn"
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Resource": {
+                                        "Fn::GetAtt": [
                                           "PipelineAssetsFileRole59943A77",
                                           "Arn"
                                         ]
@@ -1288,7 +1298,7 @@
                                 "configuration": {
                                   "Owner": "Barrokgl",
                                   "Repo": "cdk-pipeline-demo",
-                                  "Branch": "main",
+                                  "Branch": "feature/*",
                                   "OAuthToken": "{{resolve:secretsmanager:test-github-token:SecretString:::}}",
                                   "PollForSourceChanges": false
                                 },
@@ -1389,6 +1399,27 @@
                                 "roleArn": {
                                   "Fn::GetAtt": [
                                     "PipelineAssetsFileRole59943A77",
+                                    "Arn"
+                                  ]
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "name": "PreDeploy",
+                            "actions": [
+                              {
+                                "name": "PreDeployApprove",
+                                "actionTypeId": {
+                                  "category": "Approval",
+                                  "version": "1",
+                                  "owner": "AWS",
+                                  "provider": "Manual"
+                                },
+                                "runOrder": 1,
+                                "roleArn": {
+                                  "Fn::GetAtt": [
+                                    "PipelinePreDeployPreDeployApproveCodePipelineActionRole3C725008",
                                     "Arn"
                                   ]
                                 }
@@ -2031,6 +2062,60 @@
                       "FileAsset1": {
                         "id": "FileAsset1",
                         "path": "pipeline/Pipeline/Pipeline/Assets/FileAsset1"
+                      }
+                    }
+                  },
+                  "PreDeploy": {
+                    "id": "PreDeploy",
+                    "path": "pipeline/Pipeline/Pipeline/PreDeploy",
+                    "children": {
+                      "PreDeployApprove": {
+                        "id": "PreDeployApprove",
+                        "path": "pipeline/Pipeline/Pipeline/PreDeploy/PreDeployApprove",
+                        "children": {
+                          "CodePipelineActionRole": {
+                            "id": "CodePipelineActionRole",
+                            "path": "pipeline/Pipeline/Pipeline/PreDeploy/PreDeployApprove/CodePipelineActionRole",
+                            "children": {
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "pipeline/Pipeline/Pipeline/PreDeploy/PreDeployApprove/CodePipelineActionRole/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                                  "aws:cdk:cloudformation:props": {
+                                    "assumeRolePolicyDocument": {
+                                      "Statement": [
+                                        {
+                                          "Action": "sts:AssumeRole",
+                                          "Effect": "Allow",
+                                          "Principal": {
+                                            "AWS": {
+                                              "Fn::Join": [
+                                                "",
+                                                [
+                                                  "arn:",
+                                                  {
+                                                    "Ref": "AWS::Partition"
+                                                  },
+                                                  ":iam::",
+                                                  {
+                                                    "Ref": "AWS::AccountId"
+                                                  },
+                                                  ":root"
+                                                ]
+                                              ]
+                                            }
+                                          }
+                                        }
+                                      ],
+                                      "Version": "2012-10-17"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
                       }
                     }
                   },
@@ -2991,6 +3076,10 @@
                     }
                   }
                 }
+              },
+              "PreDeploy": {
+                "id": "PreDeploy",
+                "path": "pipeline/Pipeline/PreDeploy"
               },
               "pre-prod": {
                 "id": "pre-prod",

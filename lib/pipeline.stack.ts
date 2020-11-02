@@ -28,7 +28,7 @@ export class PipelineStack extends Stack {
                 secretName: 'test-github-token',
                 owner: 'Barrokgl',
                 repo: 'cdk-pipeline-demo',
-                branch: 'main'
+                branch: 'feature/*'
             })
             .addPreDeployAction((_, next) => new ManualApprovalAction({
                 actionName: 'PreDeployApprove',
