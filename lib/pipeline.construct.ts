@@ -26,6 +26,7 @@ export class PipelineConstruct {
     private pipeline: CdkPipeline;
     private stage: Stage;
 
+    private preDeployActions: Array<(pipeline: CdkPipeline, nextRunOrder: number) => IAction> = [];
     private actions: Array<(pipeline: CdkPipeline, nextRunOrder: number) => IAction> = [];
     private sourceAction: IAction;
     private synthAction: IAction;
@@ -60,6 +61,11 @@ export class PipelineConstruct {
         return this;
     }
 
+    addPreDeployAction(fun: (pipeline: CdkPipeline, nextRunOrder: number) => IAction) {
+        this.preDeployActions.push(fun);
+        return this;
+    }
+
     addStage(stage: Stage) {
         this.stage = stage;
         return this;
@@ -88,6 +94,13 @@ export class PipelineConstruct {
             sourceAction: this.sourceAction,
             synthAction: this.synthAction,
         });
+
+        if (this.preDeployActions.length > 0) {
+            const preDeploy = this.pipeline.addStage('PreDeploy');
+            this.preDeployActions.forEach(f => {
+                preDeploy.addActions(f(this.pipeline, preDeploy.nextSequentialRunOrder()));
+            });
+        }
 
         if (this.stage !== undefined) {
             const appStage = this.pipeline.addApplicationStage(this.stage);

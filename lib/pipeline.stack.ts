@@ -30,6 +30,10 @@ export class PipelineStack extends Stack {
                 repo: 'cdk-pipeline-demo',
                 branch: 'main'
             })
+            .addPreDeployAction((_, next) => new ManualApprovalAction({
+                actionName: 'PreDeployApprove',
+                runOrder: next
+            }))
             .addStage(preProd)
             .addAction((pipeline, nextRunOrder) => new ShellScriptAction({
                 actionName: 'TestService',

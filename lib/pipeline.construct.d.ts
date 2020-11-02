@@ -18,12 +18,14 @@ export declare class PipelineConstruct {
     readonly id: string;
     private pipeline;
     private stage;
+    private preDeployActions;
     private actions;
     private sourceAction;
     private synthAction;
     static of(scope: Construct, props: PipelineConstructProps): PipelineConstruct;
     private constructor();
     addGithubRepository({ secretName, owner, repo, branch }: GithubActionProps): this;
+    addPreDeployAction(fun: (pipeline: CdkPipeline, nextRunOrder: number) => IAction): this;
     addStage(stage: Stage): this;
     addAction(fun: (pipeline: CdkPipeline, nextRunOrder: number) => IAction): this;
     addInvokeLambdaAction(lambda: IFunction, params?: {

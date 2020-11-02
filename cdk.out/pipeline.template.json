@@ -68,7 +68,7 @@
           "S3Bucket": {
             "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-us-east-1"
           },
-          "S3Key": "6362d9e961b868d4cd35d14920bfe4fb2fc2b5e22eb13db23dc531ea3ebdd610.zip"
+          "S3Key": "11f16be65288e57d97d633ac3266d67fe0ab9e0d0978647d2142a127653ad832.zip"
         },
         "Handler": "invoke-test.handler",
         "Role": {
@@ -85,7 +85,7 @@
       ],
       "Metadata": {
         "aws:cdk:path": "pipeline/invoke-lambda/Resource",
-        "aws:asset:path": "asset.6362d9e961b868d4cd35d14920bfe4fb2fc2b5e22eb13db23dc531ea3ebdd610",
+        "aws:asset:path": "asset.11f16be65288e57d97d633ac3266d67fe0ab9e0d0978647d2142a127653ad832",
         "aws:asset:property": "Code"
       }
     },
@@ -829,7 +829,7 @@
                     "Arn"
                   ]
                 },
-                "RunOrder": 3
+                "RunOrder": 4
               },
               {
                 "ActionTypeId": {
@@ -850,7 +850,7 @@
                     "Arn"
                   ]
                 },
-                "RunOrder": 4
+                "RunOrder": 5
               },
               {
                 "ActionTypeId": {
@@ -866,7 +866,7 @@
                     "Arn"
                   ]
                 },
-                "RunOrder": 5
+                "RunOrder": 6
               },
               {
                 "ActionTypeId": {
@@ -2142,7 +2142,7 @@
           ]
         },
         "Source": {
-          "BuildSpec": "{\n  \"version\": \"0.2\",\n  \"phases\": {\n    \"install\": {\n      \"commands\": \"npm install -g cdk-assets\"\n    },\n    \"build\": {\n      \"commands\": [\n        \"cdk-assets --path \\\"assembly-pipeline-pre-prod/pipelinepreprodwebservice7055A599.assets.json\\\" --verbose publish \\\"6362d9e961b868d4cd35d14920bfe4fb2fc2b5e22eb13db23dc531ea3ebdd610:982637769374-us-east-1\\\"\"\n      ]\n    }\n  }\n}",
+          "BuildSpec": "{\n  \"version\": \"0.2\",\n  \"phases\": {\n    \"install\": {\n      \"commands\": \"npm install -g cdk-assets\"\n    },\n    \"build\": {\n      \"commands\": [\n        \"cdk-assets --path \\\"assembly-pipeline-pre-prod/pipelinepreprodwebservice7055A599.assets.json\\\" --verbose publish \\\"11f16be65288e57d97d633ac3266d67fe0ab9e0d0978647d2142a127653ad832:982637769374-us-east-1\\\"\"\n      ]\n    }\n  }\n}",
           "Type": "CODEPIPELINE"
         },
         "EncryptionKey": {
