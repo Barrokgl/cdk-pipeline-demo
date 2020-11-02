@@ -87,6 +87,7 @@ export class PipelineConstruct {
             cloudAssemblyArtifact: this.cloudAssemblyArtifact,
             sourceAction: this.sourceAction,
             synthAction: this.synthAction,
+            crossAccountKeys: false
         });
 
         if (this.stage !== undefined) {

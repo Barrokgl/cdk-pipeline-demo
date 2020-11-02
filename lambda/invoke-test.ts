@@ -5,12 +5,12 @@ const pipeline = new AWS.CodePipeline({
     region: 'us-east-1',
 });
 
-const putJobSuccess = function(jobId: string, message: string, context: Context) {
+const putJobSuccess = async function(jobId: string, message: string, context: Context) {
     const params = {
         jobId
     };
     console.log('pre put jo success');
-    pipeline.putJobSuccessResult(params, function(err, data) {
+    await pipeline.putJobSuccessResult(params, function(err, data) {
         console.log('put job success', err, data);
 
         if(err) {
@@ -19,10 +19,10 @@ const putJobSuccess = function(jobId: string, message: string, context: Context)
             console.log('context success', message)
             context.succeed(message);
         }
-    });
+    }).promise();
 };
 
-const putJobFailure = function(jobId: string, message: string, context: Context) {
+const putJobFailure = async function(jobId: string, message: string, context: Context) {
     const params = {
         jobId,
         failureDetails: {
@@ -31,9 +31,9 @@ const putJobFailure = function(jobId: string, message: string, context: Context)
             externalExecutionId: context.awsRequestId
         }
     };
-    pipeline.putJobFailureResult(params, function(err, data) {
+    await pipeline.putJobFailureResult(params, function(err, data) {
         context.fail(message);
-    });
+    }).promise();
 };
 
 export async function handler(event: CodePipelineEvent, context: Context) {
@@ -41,5 +41,5 @@ export async function handler(event: CodePipelineEvent, context: Context) {
     console.log(jobId);
     console.log(JSON.stringify(event["CodePipeline.job"].data.actionConfiguration, undefined, 2));
 
-    putJobSuccess(jobId, 'success', context)
+    await putJobSuccess(jobId, 'success', context)
 }
