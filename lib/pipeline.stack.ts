@@ -54,11 +54,11 @@ export class PipelineStack extends Stack {
                 ],
                 runOrder: nextRunOrder
             }))
-            .addInvokeLambdaAction(invokeLambda)
-            .addAction((_, nextRunOrder) => new ManualApprovalAction({
-                actionName: 'Approve',
-                runOrder: nextRunOrder
-            }))
+            // .addInvokeLambdaAction(invokeLambda)
+            // .addAction((_, nextRunOrder) => new ManualApprovalAction({
+            //     actionName: 'Approve',
+            //     runOrder: nextRunOrder
+            // }))
             .build();
     }
 }
