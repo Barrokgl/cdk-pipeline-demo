@@ -554,40 +554,6 @@
                         ]
                       }
                     }
-                  },
-                  "DefaultPolicy": {
-                    "id": "DefaultPolicy",
-                    "path": "pipeline/invoke-lambda/ServiceRole/DefaultPolicy",
-                    "children": {
-                      "Resource": {
-                        "id": "Resource",
-                        "path": "pipeline/invoke-lambda/ServiceRole/DefaultPolicy/Resource",
-                        "attributes": {
-                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
-                          "aws:cdk:cloudformation:props": {
-                            "policyDocument": {
-                              "Statement": [
-                                {
-                                  "Action": [
-                                    "codepipeline:PutJobSuccessResult",
-                                    "codepipeline:PutJobFailureResult"
-                                  ],
-                                  "Effect": "Allow",
-                                  "Resource": "*"
-                                }
-                              ],
-                              "Version": "2012-10-17"
-                            },
-                            "policyName": "invokelambdaServiceRoleDefaultPolicyEFE74C64",
-                            "roles": [
-                              {
-                                "Ref": "invokelambdaServiceRoleEC6D15F2"
-                              }
-                            ]
-                          }
-                        }
-                      }
-                    }
                   }
                 }
               },
@@ -612,9 +578,7 @@
                   "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                   "aws:cdk:cloudformation:props": {
                     "code": {
-                      "s3Bucket": {
-                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-us-east-1"
-                      },
+                      "s3Bucket": "cdk-hnb659fds-assets-982637769374-us-east-1",
                       "s3Key": "11f16be65288e57d97d633ac3266d67fe0ab9e0d0978647d2142a127653ad832.zip"
                     },
                     "handler": "invoke-test.handler",
@@ -634,6 +598,51 @@
             "id": "dev-pipeline-sources",
             "path": "pipeline/dev-pipeline-sources",
             "children": {
+              "Pipeline-event-rule": {
+                "id": "Pipeline-event-rule",
+                "path": "pipeline/dev-pipeline-sources/Pipeline-event-rule",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "pipeline/dev-pipeline-sources/Pipeline-event-rule/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Events::Rule",
+                      "aws:cdk:cloudformation:props": {
+                        "eventPattern": {
+                          "source": [
+                            "aws.s3"
+                          ],
+                          "detail-type": [
+                            "AWS API Call via CloudTrail"
+                          ],
+                          "detail": {
+                            "resources": {
+                              "ARN": [
+                                {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      "arn:",
+                                      {
+                                        "Ref": "AWS::Partition"
+                                      },
+                                      ":s3:::dev-pipeline-sources/sources.zip"
+                                    ]
+                                  ]
+                                }
+                              ]
+                            },
+                            "eventName": [
+                              "PutObject"
+                            ]
+                          }
+                        },
+                        "state": "ENABLED"
+                      }
+                    }
+                  }
+                }
+              },
               "pipelinePipelineF6A4ABEBSourceEventRulesources.zip": {
                 "id": "pipelinePipelineF6A4ABEBSourceEventRulesources.zip",
                 "path": "pipeline/dev-pipeline-sources/pipelinePipelineF6A4ABEBSourceEventRulesources.zip",
@@ -695,11 +704,7 @@
                                   {
                                     "Ref": "AWS::Partition"
                                   },
-                                  ":codepipeline:us-east-1:",
-                                  {
-                                    "Ref": "AWS::AccountId"
-                                  },
-                                  ":",
+                                  ":codepipeline:us-east-1:982637769374:",
                                   {
                                     "Ref": "Pipeline9850B417"
                                   }
@@ -790,11 +795,7 @@
                                             "Arn"
                                           ]
                                         },
-                                        "/AWSLogs/",
-                                        {
-                                          "Ref": "AWS::AccountId"
-                                        },
-                                        "/*"
+                                        "/AWSLogs/982637769374/*"
                                       ]
                                     ]
                                   }
@@ -903,11 +904,7 @@
                                           {
                                             "Ref": "AWS::Partition"
                                           },
-                                          ":iam::",
-                                          {
-                                            "Ref": "AWS::AccountId"
-                                          },
-                                          ":root"
+                                          ":iam::982637769374:root"
                                         ]
                                       ]
                                     }
@@ -1204,120 +1201,6 @@
                       "Notifications": {
                         "id": "Notifications",
                         "path": "pipeline/Pipeline/Pipeline/ArtifactsBucket/Notifications"
-                      },
-                      "Policy": {
-                        "id": "Policy",
-                        "path": "pipeline/Pipeline/Pipeline/ArtifactsBucket/Policy",
-                        "children": {
-                          "Resource": {
-                            "id": "Resource",
-                            "path": "pipeline/Pipeline/Pipeline/ArtifactsBucket/Policy/Resource",
-                            "attributes": {
-                              "aws:cdk:cloudformation:type": "AWS::S3::BucketPolicy",
-                              "aws:cdk:cloudformation:props": {
-                                "bucket": {
-                                  "Ref": "PipelineArtifactsBucketAEA9A052"
-                                },
-                                "policyDocument": {
-                                  "Statement": [
-                                    {
-                                      "Action": [
-                                        "s3:GetObject*",
-                                        "s3:GetBucket*",
-                                        "s3:List*"
-                                      ],
-                                      "Effect": "Allow",
-                                      "Principal": {
-                                        "AWS": {
-                                          "Fn::Join": [
-                                            "",
-                                            [
-                                              "arn:",
-                                              {
-                                                "Ref": "AWS::Partition"
-                                              },
-                                              ":iam::982637769374:role/cdk-hnb659fds-deploy-role-982637769374-us-east-1"
-                                            ]
-                                          ]
-                                        }
-                                      },
-                                      "Resource": [
-                                        {
-                                          "Fn::GetAtt": [
-                                            "PipelineArtifactsBucketAEA9A052",
-                                            "Arn"
-                                          ]
-                                        },
-                                        {
-                                          "Fn::Join": [
-                                            "",
-                                            [
-                                              {
-                                                "Fn::GetAtt": [
-                                                  "PipelineArtifactsBucketAEA9A052",
-                                                  "Arn"
-                                                ]
-                                              },
-                                              "/*"
-                                            ]
-                                          ]
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "Action": [
-                                        "s3:GetObject*",
-                                        "s3:GetBucket*",
-                                        "s3:List*",
-                                        "s3:DeleteObject*",
-                                        "s3:PutObject*",
-                                        "s3:Abort*"
-                                      ],
-                                      "Effect": "Allow",
-                                      "Principal": {
-                                        "AWS": {
-                                          "Fn::Join": [
-                                            "",
-                                            [
-                                              "arn:",
-                                              {
-                                                "Ref": "AWS::Partition"
-                                              },
-                                              ":iam::982637769374:role/cdk-hnb659fds-deploy-role-982637769374-us-east-1"
-                                            ]
-                                          ]
-                                        }
-                                      },
-                                      "Resource": [
-                                        {
-                                          "Fn::GetAtt": [
-                                            "PipelineArtifactsBucketAEA9A052",
-                                            "Arn"
-                                          ]
-                                        },
-                                        {
-                                          "Fn::Join": [
-                                            "",
-                                            [
-                                              {
-                                                "Fn::GetAtt": [
-                                                  "PipelineArtifactsBucketAEA9A052",
-                                                  "Arn"
-                                                ]
-                                              },
-                                              "/*"
-                                            ]
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ],
-                                  "Version": "2012-10-17"
-                                }
-                              }
-                            }
-                          }
-                        }
                       }
                     }
                   },
@@ -1471,26 +1354,6 @@
                                       "Action": "sts:AssumeRole",
                                       "Effect": "Allow",
                                       "Resource": {
-                                        "Fn::GetAtt": [
-                                          "PipelinepreprodInvokeLambdaCodePipelineActionRole137A8530",
-                                          "Arn"
-                                        ]
-                                      }
-                                    },
-                                    {
-                                      "Action": "sts:AssumeRole",
-                                      "Effect": "Allow",
-                                      "Resource": {
-                                        "Fn::GetAtt": [
-                                          "PipelinepreprodApproveCodePipelineActionRole8366A821",
-                                          "Arn"
-                                        ]
-                                      }
-                                    },
-                                    {
-                                      "Action": "sts:AssumeRole",
-                                      "Effect": "Allow",
-                                      "Resource": {
                                         "Fn::Join": [
                                           "",
                                           [
@@ -1588,7 +1451,7 @@
                                   "ProjectName": {
                                     "Ref": "PipelineBuildSynthCdkBuildProject6BEFA8E6"
                                   },
-                                  "EnvironmentVariables": "[{\"name\":\"_PROJECT_CONFIG_HASH\",\"type\":\"PLAINTEXT\",\"value\":\"a538b65d98bd10c25e6763c03a1adc9c15b75ac2bb8618fcebd0d316497c20b9\"}]"
+                                  "EnvironmentVariables": "[{\"name\":\"_PROJECT_CONFIG_HASH\",\"type\":\"PLAINTEXT\",\"value\":\"7c275f8aa838cf5b1732b0db8e0f475e480c58195beacdf8745e0ba36e28f8cd\"}]"
                                 },
                                 "runOrder": 1,
                                 "roleArn": {
@@ -1708,43 +1571,6 @@
                                 "roleArn": {
                                   "Fn::GetAtt": [
                                     "PipelinepreprodTestServiceCodePipelineActionRoleCB2B1BB0",
-                                    "Arn"
-                                  ]
-                                }
-                              },
-                              {
-                                "name": "InvokeLambda",
-                                "actionTypeId": {
-                                  "category": "Invoke",
-                                  "version": "1",
-                                  "owner": "AWS",
-                                  "provider": "Lambda"
-                                },
-                                "configuration": {
-                                  "FunctionName": {
-                                    "Ref": "invokelambda129409D0"
-                                  }
-                                },
-                                "runOrder": 5,
-                                "roleArn": {
-                                  "Fn::GetAtt": [
-                                    "PipelinepreprodInvokeLambdaCodePipelineActionRole137A8530",
-                                    "Arn"
-                                  ]
-                                }
-                              },
-                              {
-                                "name": "Approve",
-                                "actionTypeId": {
-                                  "category": "Approval",
-                                  "version": "1",
-                                  "owner": "AWS",
-                                  "provider": "Manual"
-                                },
-                                "runOrder": 6,
-                                "roleArn": {
-                                  "Fn::GetAtt": [
-                                    "PipelinepreprodApproveCodePipelineActionRole8366A821",
                                     "Arn"
                                   ]
                                 }
@@ -1883,11 +1709,7 @@
                                                   {
                                                     "Ref": "AWS::Partition"
                                                   },
-                                                  ":iam::",
-                                                  {
-                                                    "Ref": "AWS::AccountId"
-                                                  },
-                                                  ":root"
+                                                  ":iam::982637769374:root"
                                                 ]
                                               ]
                                             }
@@ -2058,11 +1880,7 @@
                                             {
                                               "Ref": "AWS::Partition"
                                             },
-                                            ":codepipeline:us-east-1:",
-                                            {
-                                              "Ref": "AWS::AccountId"
-                                            },
-                                            ":",
+                                            ":codepipeline:us-east-1:982637769374:",
                                             {
                                               "Ref": "Pipeline9850B417"
                                             }
@@ -2118,11 +1936,7 @@
                                                   {
                                                     "Ref": "AWS::Partition"
                                                   },
-                                                  ":iam::",
-                                                  {
-                                                    "Ref": "AWS::AccountId"
-                                                  },
-                                                  ":root"
+                                                  ":iam::982637769374:root"
                                                 ]
                                               ]
                                             }
@@ -2233,11 +2047,7 @@
                                                           {
                                                             "Ref": "AWS::Partition"
                                                           },
-                                                          ":logs:us-east-1:",
-                                                          {
-                                                            "Ref": "AWS::AccountId"
-                                                          },
-                                                          ":log-group:/aws/codebuild/",
+                                                          ":logs:us-east-1:982637769374:log-group:/aws/codebuild/",
                                                           {
                                                             "Ref": "PipelineBuildSynthCdkBuildProject6BEFA8E6"
                                                           }
@@ -2252,11 +2062,7 @@
                                                           {
                                                             "Ref": "AWS::Partition"
                                                           },
-                                                          ":logs:us-east-1:",
-                                                          {
-                                                            "Ref": "AWS::AccountId"
-                                                          },
-                                                          ":log-group:/aws/codebuild/",
+                                                          ":logs:us-east-1:982637769374:log-group:/aws/codebuild/",
                                                           {
                                                             "Ref": "PipelineBuildSynthCdkBuildProject6BEFA8E6"
                                                           },
@@ -2283,11 +2089,7 @@
                                                         {
                                                           "Ref": "AWS::Partition"
                                                         },
-                                                        ":codebuild:us-east-1:",
-                                                        {
-                                                          "Ref": "AWS::AccountId"
-                                                        },
-                                                        ":report-group/",
+                                                        ":codebuild:us-east-1:982637769374:report-group/",
                                                         {
                                                           "Ref": "PipelineBuildSynthCdkBuildProject6BEFA8E6"
                                                         },
@@ -2389,7 +2191,14 @@
                                       "type": "LINUX_CONTAINER",
                                       "image": "aws/codebuild/standard:4.0",
                                       "privilegedMode": false,
-                                      "computeType": "BUILD_GENERAL1_SMALL"
+                                      "computeType": "BUILD_GENERAL1_SMALL",
+                                      "environmentVariables": [
+                                        {
+                                          "name": "STAGE",
+                                          "type": "PLAINTEXT",
+                                          "value": "dev"
+                                        }
+                                      ]
                                     },
                                     "serviceRole": {
                                       "Fn::GetAtt": [
@@ -2448,11 +2257,7 @@
                                                   {
                                                     "Ref": "AWS::Partition"
                                                   },
-                                                  ":iam::",
-                                                  {
-                                                    "Ref": "AWS::AccountId"
-                                                  },
-                                                  ":root"
+                                                  ":iam::982637769374:root"
                                                 ]
                                               ]
                                             }
@@ -2552,11 +2357,7 @@
                                                   {
                                                     "Ref": "AWS::Partition"
                                                   },
-                                                  ":iam::",
-                                                  {
-                                                    "Ref": "AWS::AccountId"
-                                                  },
-                                                  ":root"
+                                                  ":iam::982637769374:root"
                                                 ]
                                               ]
                                             }
@@ -2606,11 +2407,7 @@
                                                   {
                                                     "Ref": "AWS::Partition"
                                                   },
-                                                  ":iam::",
-                                                  {
-                                                    "Ref": "AWS::AccountId"
-                                                  },
-                                                  ":root"
+                                                  ":iam::982637769374:root"
                                                 ]
                                               ]
                                             }
@@ -2721,11 +2518,7 @@
                                                           {
                                                             "Ref": "AWS::Partition"
                                                           },
-                                                          ":logs:us-east-1:",
-                                                          {
-                                                            "Ref": "AWS::AccountId"
-                                                          },
-                                                          ":log-group:/aws/codebuild/",
+                                                          ":logs:us-east-1:982637769374:log-group:/aws/codebuild/",
                                                           {
                                                             "Ref": "PipelinepreprodTestServiceProject6AC96F8D"
                                                           }
@@ -2740,11 +2533,7 @@
                                                           {
                                                             "Ref": "AWS::Partition"
                                                           },
-                                                          ":logs:us-east-1:",
-                                                          {
-                                                            "Ref": "AWS::AccountId"
-                                                          },
-                                                          ":log-group:/aws/codebuild/",
+                                                          ":logs:us-east-1:982637769374:log-group:/aws/codebuild/",
                                                           {
                                                             "Ref": "PipelinepreprodTestServiceProject6AC96F8D"
                                                           },
@@ -2771,11 +2560,7 @@
                                                         {
                                                           "Ref": "AWS::Partition"
                                                         },
-                                                        ":codebuild:us-east-1:",
-                                                        {
-                                                          "Ref": "AWS::AccountId"
-                                                        },
-                                                        ":report-group/",
+                                                        ":codebuild:us-east-1:982637769374:report-group/",
                                                         {
                                                           "Ref": "PipelinepreprodTestServiceProject6AC96F8D"
                                                         },
@@ -2896,143 +2681,6 @@
                           }
                         }
                       },
-                      "InvokeLambda": {
-                        "id": "InvokeLambda",
-                        "path": "pipeline/Pipeline/Pipeline/pre-prod/InvokeLambda",
-                        "children": {
-                          "CodePipelineActionRole": {
-                            "id": "CodePipelineActionRole",
-                            "path": "pipeline/Pipeline/Pipeline/pre-prod/InvokeLambda/CodePipelineActionRole",
-                            "children": {
-                              "Resource": {
-                                "id": "Resource",
-                                "path": "pipeline/Pipeline/Pipeline/pre-prod/InvokeLambda/CodePipelineActionRole/Resource",
-                                "attributes": {
-                                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
-                                  "aws:cdk:cloudformation:props": {
-                                    "assumeRolePolicyDocument": {
-                                      "Statement": [
-                                        {
-                                          "Action": "sts:AssumeRole",
-                                          "Effect": "Allow",
-                                          "Principal": {
-                                            "AWS": {
-                                              "Fn::Join": [
-                                                "",
-                                                [
-                                                  "arn:",
-                                                  {
-                                                    "Ref": "AWS::Partition"
-                                                  },
-                                                  ":iam::",
-                                                  {
-                                                    "Ref": "AWS::AccountId"
-                                                  },
-                                                  ":root"
-                                                ]
-                                              ]
-                                            }
-                                          }
-                                        }
-                                      ],
-                                      "Version": "2012-10-17"
-                                    }
-                                  }
-                                }
-                              },
-                              "DefaultPolicy": {
-                                "id": "DefaultPolicy",
-                                "path": "pipeline/Pipeline/Pipeline/pre-prod/InvokeLambda/CodePipelineActionRole/DefaultPolicy",
-                                "children": {
-                                  "Resource": {
-                                    "id": "Resource",
-                                    "path": "pipeline/Pipeline/Pipeline/pre-prod/InvokeLambda/CodePipelineActionRole/DefaultPolicy/Resource",
-                                    "attributes": {
-                                      "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
-                                      "aws:cdk:cloudformation:props": {
-                                        "policyDocument": {
-                                          "Statement": [
-                                            {
-                                              "Action": "lambda:ListFunctions",
-                                              "Effect": "Allow",
-                                              "Resource": "*"
-                                            },
-                                            {
-                                              "Action": "lambda:InvokeFunction",
-                                              "Effect": "Allow",
-                                              "Resource": {
-                                                "Fn::GetAtt": [
-                                                  "invokelambda129409D0",
-                                                  "Arn"
-                                                ]
-                                              }
-                                            }
-                                          ],
-                                          "Version": "2012-10-17"
-                                        },
-                                        "policyName": "PipelinepreprodInvokeLambdaCodePipelineActionRoleDefaultPolicy9DA4910A",
-                                        "roles": [
-                                          {
-                                            "Ref": "PipelinepreprodInvokeLambdaCodePipelineActionRole137A8530"
-                                          }
-                                        ]
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "Approve": {
-                        "id": "Approve",
-                        "path": "pipeline/Pipeline/Pipeline/pre-prod/Approve",
-                        "children": {
-                          "CodePipelineActionRole": {
-                            "id": "CodePipelineActionRole",
-                            "path": "pipeline/Pipeline/Pipeline/pre-prod/Approve/CodePipelineActionRole",
-                            "children": {
-                              "Resource": {
-                                "id": "Resource",
-                                "path": "pipeline/Pipeline/Pipeline/pre-prod/Approve/CodePipelineActionRole/Resource",
-                                "attributes": {
-                                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
-                                  "aws:cdk:cloudformation:props": {
-                                    "assumeRolePolicyDocument": {
-                                      "Statement": [
-                                        {
-                                          "Action": "sts:AssumeRole",
-                                          "Effect": "Allow",
-                                          "Principal": {
-                                            "AWS": {
-                                              "Fn::Join": [
-                                                "",
-                                                [
-                                                  "arn:",
-                                                  {
-                                                    "Ref": "AWS::Partition"
-                                                  },
-                                                  ":iam::",
-                                                  {
-                                                    "Ref": "AWS::AccountId"
-                                                  },
-                                                  ":root"
-                                                ]
-                                              ]
-                                            }
-                                          }
-                                        }
-                                      ],
-                                      "Version": "2012-10-17"
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
                       "web-service.Deploy": {
                         "id": "web-service.Deploy",
                         "path": "pipeline/Pipeline/Pipeline/pre-prod/web-service.Deploy"
@@ -3106,11 +2754,7 @@
                                                   {
                                                     "Ref": "AWS::Partition"
                                                   },
-                                                  ":logs:us-east-1:",
-                                                  {
-                                                    "Ref": "AWS::AccountId"
-                                                  },
-                                                  ":log-group:/aws/codebuild/",
+                                                  ":logs:us-east-1:982637769374:log-group:/aws/codebuild/",
                                                   {
                                                     "Ref": "PipelineUpdatePipelineSelfMutationDAA41400"
                                                   }
@@ -3125,11 +2769,7 @@
                                                   {
                                                     "Ref": "AWS::Partition"
                                                   },
-                                                  ":logs:us-east-1:",
-                                                  {
-                                                    "Ref": "AWS::AccountId"
-                                                  },
-                                                  ":log-group:/aws/codebuild/",
+                                                  ":logs:us-east-1:982637769374:log-group:/aws/codebuild/",
                                                   {
                                                     "Ref": "PipelineUpdatePipelineSelfMutationDAA41400"
                                                   },
@@ -3156,11 +2796,7 @@
                                                 {
                                                   "Ref": "AWS::Partition"
                                                 },
-                                                ":codebuild:us-east-1:",
-                                                {
-                                                  "Ref": "AWS::AccountId"
-                                                },
-                                                ":report-group/",
+                                                ":codebuild:us-east-1:982637769374:report-group/",
                                                 {
                                                   "Ref": "PipelineUpdatePipelineSelfMutationDAA41400"
                                                 },
@@ -3329,11 +2965,7 @@
                                           {
                                             "Ref": "AWS::Partition"
                                           },
-                                          ":iam::",
-                                          {
-                                            "Ref": "AWS::AccountId"
-                                          },
-                                          ":root"
+                                          ":iam::982637769374:root"
                                         ]
                                       ]
                                     }
@@ -3372,11 +3004,7 @@
                                             {
                                               "Ref": "AWS::Partition"
                                             },
-                                            ":logs:us-east-1:",
-                                            {
-                                              "Ref": "AWS::AccountId"
-                                            },
-                                            ":log-group:/aws/codebuild/*"
+                                            ":logs:us-east-1:982637769374:log-group:/aws/codebuild/*"
                                           ]
                                         ]
                                       }
@@ -3398,11 +3026,7 @@
                                             {
                                               "Ref": "AWS::Partition"
                                             },
-                                            ":codebuild:us-east-1:",
-                                            {
-                                              "Ref": "AWS::AccountId"
-                                            },
-                                            ":report-group/*"
+                                            ":codebuild:us-east-1:982637769374:report-group/*"
                                           ]
                                         ]
                                       }

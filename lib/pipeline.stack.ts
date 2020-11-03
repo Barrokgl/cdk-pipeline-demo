@@ -13,7 +13,12 @@ import {PipelineConstruct} from "./pipeline.construct";
 
 export class PipelineStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
-        super(scope, id, props);
+        super(scope, id, {
+            ...props, env: {
+                region: 'us-east-1',
+                account: '982637769374'
+            }
+        });
 
         const preProd = new DemoStage(this, 'pre-prod', {
             env: {
@@ -28,7 +33,7 @@ export class PipelineStack extends Stack {
             code: Code.fromAsset('lambda')
         })
 
-        PipelineConstruct.of(this, { id: 'Pipeline', stage: 'dev'})
+        PipelineConstruct.of(this, {id: 'Pipeline', stage: 'dev'})
             // .addGithubRepository({
             //     secretName: 'test-github-token',
             //     owner: 'Barrokgl',
