@@ -6,6 +6,7 @@ import {IFunction} from "@aws-cdk/aws-lambda";
 import {Bucket} from "@aws-cdk/aws-s3";
 import {Effect, IRole, PolicyStatement, Role, ServicePrincipal} from "@aws-cdk/aws-iam";
 import {ServicePrincipals} from "cdk-constants";
+import {ReadWriteType, Trail} from "@aws-cdk/aws-cloudtrail";
 
 export interface PipelineConstructProps {
     id: string;
@@ -57,25 +58,19 @@ export class PipelineConstruct {
     }
 
     addS3Source({bucketName, bucketPath}: S3Source) {
-        // const s3policy = new PolicyStatement({
-        //     effect: Effect.ALLOW,
-        //     actions: [
-        //         's3:*',
-        //     ],
-        //     resources: ['*'],
-        // });
-        // this.role.addToPrincipalPolicy(s3policy);
-
         const bucket = Bucket.fromBucketName(this.scope, bucketName, bucketName)
-        // bucket.grantRead(this.role);
+
+        const trail = new Trail(this.scope, `${this.id}-cloud-trail`);
+        trail.addS3EventSelector([{bucket, objectPrefix: bucket.arnForObjects(bucketPath)}], {
+            readWriteType: ReadWriteType.WRITE_ONLY,
+        });
 
         this.sourceAction = new S3SourceAction({
             actionName: 'S3Source',
             bucketKey: bucketPath,
             bucket: bucket,
             output: this.sourceArtifact,
-            trigger: S3Trigger.POLL,
-            // role: this.role
+            trigger: S3Trigger.EVENTS,
         });
         return this;
     }
