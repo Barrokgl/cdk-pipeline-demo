@@ -1,9 +1,11 @@
 import {Construct, SecretValue, Stage} from "@aws-cdk/core";
 import {Artifact, IAction} from "@aws-cdk/aws-codepipeline";
-import {Action, GitHubSourceAction, LambdaInvokeAction} from "@aws-cdk/aws-codepipeline-actions";
+import {GitHubSourceAction, LambdaInvokeAction, S3SourceAction, S3Trigger} from "@aws-cdk/aws-codepipeline-actions";
 import {CdkPipeline, SimpleSynthAction} from "@aws-cdk/pipelines";
 import {IFunction} from "@aws-cdk/aws-lambda";
-import {pipeline} from "stream";
+import {Bucket} from "@aws-cdk/aws-s3";
+import {Effect, IRole, PolicyStatement, Role, ServicePrincipal} from "@aws-cdk/aws-iam";
+import {ServicePrincipals} from "cdk-constants";
 
 export interface PipelineConstructProps {
     id: string;
@@ -14,6 +16,11 @@ interface GithubActionProps {
     owner: string;
     repo: string;
     branch?: string;
+}
+
+interface S3Source {
+    bucketName: string;
+    bucketPath: string;
 }
 
 export class PipelineConstruct {
@@ -45,6 +52,30 @@ export class PipelineConstruct {
             sourceArtifact: this.sourceArtifact,
             cloudAssemblyArtifact: this.cloudAssemblyArtifact,
             buildCommand: 'npm run build'
+        });
+        return this;
+    }
+
+    addS3Source({bucketName, bucketPath}: S3Source) {
+        // const s3policy = new PolicyStatement({
+        //     effect: Effect.ALLOW,
+        //     actions: [
+        //         's3:*',
+        //     ],
+        //     resources: ['*'],
+        // });
+        // this.role.addToPrincipalPolicy(s3policy);
+
+        const bucket = Bucket.fromBucketName(this.scope, bucketName, bucketName)
+        // bucket.grantRead(this.role);
+
+        this.sourceAction = new S3SourceAction({
+            actionName: 'S3Source',
+            bucketKey: bucketPath,
+            bucket: bucket,
+            output: this.sourceArtifact,
+            trigger: S3Trigger.POLL,
+            // role: this.role
         });
         return this;
     }

@@ -11,6 +11,10 @@ interface GithubActionProps {
     repo: string;
     branch?: string;
 }
+interface S3Source {
+    bucketName: string;
+    bucketPath: string;
+}
 export declare class PipelineConstruct {
     readonly sourceArtifact: Artifact;
     readonly cloudAssemblyArtifact: Artifact;
@@ -24,6 +28,7 @@ export declare class PipelineConstruct {
     private synthAction;
     static of(scope: Construct, props: PipelineConstructProps): PipelineConstruct;
     private constructor();
+    addS3Source({ bucketName, bucketPath }: S3Source): this;
     addGithubRepository({ secretName, owner, repo, branch }: GithubActionProps): this;
     addPreDeployAction(fun: (pipeline: CdkPipeline, nextRunOrder: number) => IAction): this;
     addStage(stage: Stage): this;

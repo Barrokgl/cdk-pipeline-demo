@@ -1,6 +1,10 @@
-name: test
+name: pipeline
 
-on: push
+on:
+  push:
+    branches:
+      - 'feature/**'
+
 
 jobs:
   test:
@@ -11,13 +15,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Use Node.js 12
-        uses: actions/setup-node@v1
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          node-version: 12
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
 
-      - name: Npm ci
-        run: npm ci
+      - name: push sources
+        run:
+          git archive --format=zip HEAD -o sources.zip
+          aws s3 cp sources.zip s3://dev-pipeline-sources
 
-      - name: Test
-        run: npm test

@@ -1,7 +1,12 @@
 import {Construct, SecretValue, Stack, StackProps} from "@aws-cdk/core";
 import {Artifact} from "@aws-cdk/aws-codepipeline";
 import {CdkPipeline, ShellScriptAction, SimpleSynthAction} from "@aws-cdk/pipelines";
-import {GitHubSourceAction, LambdaInvokeAction, ManualApprovalAction} from "@aws-cdk/aws-codepipeline-actions";
+import {
+    GitHubSourceAction,
+    LambdaInvokeAction,
+    ManualApprovalAction,
+    S3SourceAction
+} from "@aws-cdk/aws-codepipeline-actions";
 import {DemoStage} from "./demo.stage";
 import {Code, Function, Runtime} from "@aws-cdk/aws-lambda";
 import {PipelineConstruct} from "./pipeline.construct";
@@ -24,11 +29,15 @@ export class PipelineStack extends Stack {
         })
 
         PipelineConstruct.of(this, { id: 'Pipeline'})
-            .addGithubRepository({
-                secretName: 'test-github-token',
-                owner: 'Barrokgl',
-                repo: 'cdk-pipeline-demo',
-                branch: 'feature/*'
+            // .addGithubRepository({
+            //     secretName: 'test-github-token',
+            //     owner: 'Barrokgl',
+            //     repo: 'cdk-pipeline-demo',
+            //     branch: 'feature/*'
+            // })
+            .addS3Source({
+                bucketName: 'dev-pipeline-sources',
+                bucketPath: 'sources.zip'
             })
             .addPreDeployAction((_, next) => new ManualApprovalAction({
                 actionName: 'PreDeployApprove',

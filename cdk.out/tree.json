@@ -630,6 +630,10 @@
               }
             }
           },
+          "dev-pipeline-sources": {
+            "id": "dev-pipeline-sources",
+            "path": "pipeline/dev-pipeline-sources"
+          },
           "Pipeline": {
             "id": "Pipeline",
             "path": "pipeline/Pipeline",
@@ -702,6 +706,24 @@
                                     "AWS": {
                                       "Fn::GetAtt": [
                                         "PipelineRoleB27FAA37",
+                                        "Arn"
+                                      ]
+                                    }
+                                  },
+                                  "Resource": "*"
+                                },
+                                {
+                                  "Action": [
+                                    "kms:Encrypt",
+                                    "kms:ReEncrypt*",
+                                    "kms:GenerateDataKey*",
+                                    "kms:Decrypt"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "AWS": {
+                                      "Fn::GetAtt": [
+                                        "PipelineSourceS3SourceCodePipelineActionRoleE0AB06A5",
                                         "Arn"
                                       ]
                                     }
@@ -1169,6 +1191,16 @@
                                       "Effect": "Allow",
                                       "Resource": {
                                         "Fn::GetAtt": [
+                                          "PipelineSourceS3SourceCodePipelineActionRoleE0AB06A5",
+                                          "Arn"
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Resource": {
+                                        "Fn::GetAtt": [
                                           "PipelineBuildSynthCodePipelineActionRole4E7A6C97",
                                           "Arn"
                                         ]
@@ -1283,26 +1315,30 @@
                             "name": "Source",
                             "actions": [
                               {
-                                "name": "GithubSource",
+                                "name": "S3Source",
                                 "outputArtifacts": [
                                   {
-                                    "name": "Artifact_Source_GithubSource"
+                                    "name": "Artifact_Source_S3Source"
                                   }
                                 ],
                                 "actionTypeId": {
                                   "category": "Source",
                                   "version": "1",
-                                  "owner": "ThirdParty",
-                                  "provider": "GitHub"
+                                  "owner": "AWS",
+                                  "provider": "S3"
                                 },
                                 "configuration": {
-                                  "Owner": "Barrokgl",
-                                  "Repo": "cdk-pipeline-demo",
-                                  "Branch": "feature/*",
-                                  "OAuthToken": "{{resolve:secretsmanager:test-github-token:SecretString:::}}",
-                                  "PollForSourceChanges": false
+                                  "S3Bucket": "dev-pipeline-sources",
+                                  "S3ObjectKey": "sources.zip",
+                                  "PollForSourceChanges": true
                                 },
-                                "runOrder": 1
+                                "runOrder": 1,
+                                "roleArn": {
+                                  "Fn::GetAtt": [
+                                    "PipelineSourceS3SourceCodePipelineActionRoleE0AB06A5",
+                                    "Arn"
+                                  ]
+                                }
                               }
                             ]
                           },
@@ -1313,7 +1349,7 @@
                                 "name": "Synth",
                                 "inputArtifacts": [
                                   {
-                                    "name": "Artifact_Source_GithubSource"
+                                    "name": "Artifact_Source_S3Source"
                                   }
                                 ],
                                 "outputArtifacts": [
@@ -1598,32 +1634,154 @@
                     "id": "Source",
                     "path": "pipeline/Pipeline/Pipeline/Source",
                     "children": {
-                      "GithubSource": {
-                        "id": "GithubSource",
-                        "path": "pipeline/Pipeline/Pipeline/Source/GithubSource",
+                      "S3Source": {
+                        "id": "S3Source",
+                        "path": "pipeline/Pipeline/Pipeline/Source/S3Source",
                         "children": {
-                          "WebhookResource": {
-                            "id": "WebhookResource",
-                            "path": "pipeline/Pipeline/Pipeline/Source/GithubSource/WebhookResource",
-                            "attributes": {
-                              "aws:cdk:cloudformation:type": "AWS::CodePipeline::Webhook",
-                              "aws:cdk:cloudformation:props": {
-                                "authentication": "GITHUB_HMAC",
-                                "authenticationConfiguration": {
-                                  "secretToken": "{{resolve:secretsmanager:test-github-token:SecretString:::}}"
-                                },
-                                "filters": [
-                                  {
-                                    "jsonPath": "$.ref",
-                                    "matchEquals": "refs/heads/{Branch}"
+                          "CodePipelineActionRole": {
+                            "id": "CodePipelineActionRole",
+                            "path": "pipeline/Pipeline/Pipeline/Source/S3Source/CodePipelineActionRole",
+                            "children": {
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "pipeline/Pipeline/Pipeline/Source/S3Source/CodePipelineActionRole/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                                  "aws:cdk:cloudformation:props": {
+                                    "assumeRolePolicyDocument": {
+                                      "Statement": [
+                                        {
+                                          "Action": "sts:AssumeRole",
+                                          "Effect": "Allow",
+                                          "Principal": {
+                                            "AWS": {
+                                              "Fn::Join": [
+                                                "",
+                                                [
+                                                  "arn:",
+                                                  {
+                                                    "Ref": "AWS::Partition"
+                                                  },
+                                                  ":iam::",
+                                                  {
+                                                    "Ref": "AWS::AccountId"
+                                                  },
+                                                  ":root"
+                                                ]
+                                              ]
+                                            }
+                                          }
+                                        }
+                                      ],
+                                      "Version": "2012-10-17"
+                                    }
                                   }
-                                ],
-                                "targetAction": "GithubSource",
-                                "targetPipeline": {
-                                  "Ref": "Pipeline9850B417"
-                                },
-                                "targetPipelineVersion": 1,
-                                "registerWithThirdParty": true
+                                }
+                              },
+                              "DefaultPolicy": {
+                                "id": "DefaultPolicy",
+                                "path": "pipeline/Pipeline/Pipeline/Source/S3Source/CodePipelineActionRole/DefaultPolicy",
+                                "children": {
+                                  "Resource": {
+                                    "id": "Resource",
+                                    "path": "pipeline/Pipeline/Pipeline/Source/S3Source/CodePipelineActionRole/DefaultPolicy/Resource",
+                                    "attributes": {
+                                      "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                                      "aws:cdk:cloudformation:props": {
+                                        "policyDocument": {
+                                          "Statement": [
+                                            {
+                                              "Action": [
+                                                "s3:GetObject*",
+                                                "s3:GetBucket*",
+                                                "s3:List*"
+                                              ],
+                                              "Effect": "Allow",
+                                              "Resource": [
+                                                {
+                                                  "Fn::Join": [
+                                                    "",
+                                                    [
+                                                      "arn:",
+                                                      {
+                                                        "Ref": "AWS::Partition"
+                                                      },
+                                                      ":s3:::dev-pipeline-sources"
+                                                    ]
+                                                  ]
+                                                },
+                                                {
+                                                  "Fn::Join": [
+                                                    "",
+                                                    [
+                                                      "arn:",
+                                                      {
+                                                        "Ref": "AWS::Partition"
+                                                      },
+                                                      ":s3:::dev-pipeline-sources/*"
+                                                    ]
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "Action": [
+                                                "s3:DeleteObject*",
+                                                "s3:PutObject*",
+                                                "s3:Abort*"
+                                              ],
+                                              "Effect": "Allow",
+                                              "Resource": [
+                                                {
+                                                  "Fn::GetAtt": [
+                                                    "PipelineArtifactsBucketAEA9A052",
+                                                    "Arn"
+                                                  ]
+                                                },
+                                                {
+                                                  "Fn::Join": [
+                                                    "",
+                                                    [
+                                                      {
+                                                        "Fn::GetAtt": [
+                                                          "PipelineArtifactsBucketAEA9A052",
+                                                          "Arn"
+                                                        ]
+                                                      },
+                                                      "/*"
+                                                    ]
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "Action": [
+                                                "kms:Encrypt",
+                                                "kms:ReEncrypt*",
+                                                "kms:GenerateDataKey*",
+                                                "kms:Decrypt"
+                                              ],
+                                              "Effect": "Allow",
+                                              "Resource": {
+                                                "Fn::GetAtt": [
+                                                  "PipelineArtifactsBucketEncryptionKeyF5BF0670",
+                                                  "Arn"
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          "Version": "2012-10-17"
+                                        },
+                                        "policyName": "PipelineSourceS3SourceCodePipelineActionRoleDefaultPolicy40139E18",
+                                        "roles": [
+                                          {
+                                            "Ref": "PipelineSourceS3SourceCodePipelineActionRoleE0AB06A5"
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  }
+                                }
                               }
                             }
                           }
