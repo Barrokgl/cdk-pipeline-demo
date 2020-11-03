@@ -1,6 +1,7 @@
 name: pipeline
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - 'feature/**'
@@ -23,7 +24,7 @@ jobs:
           aws-region: us-east-1
 
       - name: push sources
-        run:
+        run: |
           git archive --format=zip HEAD -o sources.zip
           aws s3 cp sources.zip s3://dev-pipeline-sources
 
