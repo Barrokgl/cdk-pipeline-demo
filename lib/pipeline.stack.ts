@@ -28,7 +28,7 @@ export class PipelineStack extends Stack {
             code: Code.fromAsset('lambda')
         })
 
-        PipelineConstruct.of(this, { id: 'Pipeline'})
+        PipelineConstruct.of(this, { id: 'Pipeline', stage: 'dev'})
             // .addGithubRepository({
             //     secretName: 'test-github-token',
             //     owner: 'Barrokgl',

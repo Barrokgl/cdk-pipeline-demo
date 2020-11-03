@@ -4,12 +4,12 @@ import {GitHubSourceAction, LambdaInvokeAction, S3SourceAction, S3Trigger} from 
 import {CdkPipeline, SimpleSynthAction} from "@aws-cdk/pipelines";
 import {IFunction} from "@aws-cdk/aws-lambda";
 import {Bucket} from "@aws-cdk/aws-s3";
-import {Effect, IRole, PolicyStatement, Role, ServicePrincipal} from "@aws-cdk/aws-iam";
-import {ServicePrincipals} from "cdk-constants";
 import {ReadWriteType, Trail} from "@aws-cdk/aws-cloudtrail";
+import {BuildEnvironmentVariableType} from "@aws-cdk/aws-codebuild";
 
 export interface PipelineConstructProps {
     id: string;
+    stage: string;
 }
 
 interface GithubActionProps {
@@ -52,7 +52,13 @@ export class PipelineConstruct {
         this.synthAction = SimpleSynthAction.standardNpmSynth({
             sourceArtifact: this.sourceArtifact,
             cloudAssemblyArtifact: this.cloudAssemblyArtifact,
-            buildCommand: 'npm run build'
+            buildCommand: 'npm run build',
+            environmentVariables: {
+                'STAGE': {
+                    type: BuildEnvironmentVariableType.PLAINTEXT,
+                    value: props.stage
+                }
+            }
         });
         return this;
     }

@@ -4,6 +4,7 @@ import { CdkPipeline } from "@aws-cdk/pipelines";
 import { IFunction } from "@aws-cdk/aws-lambda";
 export interface PipelineConstructProps {
     id: string;
+    stage: string;
 }
 interface GithubActionProps {
     secretName: string;

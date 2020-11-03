@@ -632,7 +632,228 @@
           },
           "dev-pipeline-sources": {
             "id": "dev-pipeline-sources",
-            "path": "pipeline/dev-pipeline-sources"
+            "path": "pipeline/dev-pipeline-sources",
+            "children": {
+              "pipelinePipelineF6A4ABEBSourceEventRulesources.zip": {
+                "id": "pipelinePipelineF6A4ABEBSourceEventRulesources.zip",
+                "path": "pipeline/dev-pipeline-sources/pipelinePipelineF6A4ABEBSourceEventRulesources.zip",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "pipeline/dev-pipeline-sources/pipelinePipelineF6A4ABEBSourceEventRulesources.zip/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Events::Rule",
+                      "aws:cdk:cloudformation:props": {
+                        "eventPattern": {
+                          "source": [
+                            "aws.s3"
+                          ],
+                          "detail-type": [
+                            "AWS API Call via CloudTrail"
+                          ],
+                          "detail": {
+                            "resources": {
+                              "ARN": [
+                                {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      "arn:",
+                                      {
+                                        "Ref": "AWS::Partition"
+                                      },
+                                      ":s3:::dev-pipeline-sources/sources.zip"
+                                    ]
+                                  ]
+                                }
+                              ]
+                            },
+                            "eventName": [
+                              "CompleteMultipartUpload",
+                              "CopyObject",
+                              "PutObject"
+                            ],
+                            "requestParameters": {
+                              "bucketName": [
+                                "dev-pipeline-sources"
+                              ],
+                              "key": [
+                                "sources.zip"
+                              ]
+                            }
+                          }
+                        },
+                        "state": "ENABLED",
+                        "targets": [
+                          {
+                            "id": "Target0",
+                            "arn": {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  "arn:",
+                                  {
+                                    "Ref": "AWS::Partition"
+                                  },
+                                  ":codepipeline:us-east-1:",
+                                  {
+                                    "Ref": "AWS::AccountId"
+                                  },
+                                  ":",
+                                  {
+                                    "Ref": "Pipeline9850B417"
+                                  }
+                                ]
+                              ]
+                            },
+                            "roleArn": {
+                              "Fn::GetAtt": [
+                                "PipelineEventsRole96280D9B",
+                                "Arn"
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "Pipeline-cloud-trail": {
+            "id": "Pipeline-cloud-trail",
+            "path": "pipeline/Pipeline-cloud-trail",
+            "children": {
+              "S3": {
+                "id": "S3",
+                "path": "pipeline/Pipeline-cloud-trail/S3",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "pipeline/Pipeline-cloud-trail/S3/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::S3::Bucket",
+                      "aws:cdk:cloudformation:props": {}
+                    }
+                  },
+                  "Notifications": {
+                    "id": "Notifications",
+                    "path": "pipeline/Pipeline-cloud-trail/S3/Notifications"
+                  },
+                  "Policy": {
+                    "id": "Policy",
+                    "path": "pipeline/Pipeline-cloud-trail/S3/Policy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "pipeline/Pipeline-cloud-trail/S3/Policy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::S3::BucketPolicy",
+                          "aws:cdk:cloudformation:props": {
+                            "bucket": {
+                              "Ref": "PipelinecloudtrailS30C781E61"
+                            },
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "s3:GetBucketAcl",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "cloudtrail.amazonaws.com"
+                                  },
+                                  "Resource": {
+                                    "Fn::GetAtt": [
+                                      "PipelinecloudtrailS30C781E61",
+                                      "Arn"
+                                    ]
+                                  }
+                                },
+                                {
+                                  "Action": "s3:PutObject",
+                                  "Condition": {
+                                    "StringEquals": {
+                                      "s3:x-amz-acl": "bucket-owner-full-control"
+                                    }
+                                  },
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "cloudtrail.amazonaws.com"
+                                  },
+                                  "Resource": {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        {
+                                          "Fn::GetAtt": [
+                                            "PipelinecloudtrailS30C781E61",
+                                            "Arn"
+                                          ]
+                                        },
+                                        "/AWSLogs/",
+                                        {
+                                          "Ref": "AWS::AccountId"
+                                        },
+                                        "/*"
+                                      ]
+                                    ]
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "pipeline/Pipeline-cloud-trail/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::CloudTrail::Trail",
+                  "aws:cdk:cloudformation:props": {
+                    "isLogging": true,
+                    "s3BucketName": {
+                      "Ref": "PipelinecloudtrailS30C781E61"
+                    },
+                    "enableLogFileValidation": true,
+                    "eventSelectors": [
+                      {
+                        "dataResources": [
+                          {
+                            "type": "AWS::S3::Object",
+                            "values": [
+                              {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":s3:::dev-pipeline-sources/arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":s3:::dev-pipeline-sources/sources.zip"
+                                  ]
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "readWriteType": "WriteOnly"
+                      }
+                    ],
+                    "includeGlobalServiceEvents": true,
+                    "isMultiRegionTrail": true
+                  }
+                }
+              }
+            }
           },
           "Pipeline": {
             "id": "Pipeline",
@@ -1330,7 +1551,7 @@
                                 "configuration": {
                                   "S3Bucket": "dev-pipeline-sources",
                                   "S3ObjectKey": "sources.zip",
-                                  "PollForSourceChanges": true
+                                  "PollForSourceChanges": false
                                 },
                                 "runOrder": 1,
                                 "roleArn": {
@@ -1782,6 +2003,82 @@
                                     }
                                   }
                                 }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "EventsRole": {
+                    "id": "EventsRole",
+                    "path": "pipeline/Pipeline/Pipeline/EventsRole",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "pipeline/Pipeline/Pipeline/EventsRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "events.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            }
+                          }
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "pipeline/Pipeline/Pipeline/EventsRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "pipeline/Pipeline/Pipeline/EventsRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "codepipeline:StartPipelineExecution",
+                                      "Effect": "Allow",
+                                      "Resource": {
+                                        "Fn::Join": [
+                                          "",
+                                          [
+                                            "arn:",
+                                            {
+                                              "Ref": "AWS::Partition"
+                                            },
+                                            ":codepipeline:us-east-1:",
+                                            {
+                                              "Ref": "AWS::AccountId"
+                                            },
+                                            ":",
+                                            {
+                                              "Ref": "Pipeline9850B417"
+                                            }
+                                          ]
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "PipelineEventsRoleDefaultPolicy62809D8F",
+                                "roles": [
+                                  {
+                                    "Ref": "PipelineEventsRole96280D9B"
+                                  }
+                                ]
                               }
                             }
                           }
