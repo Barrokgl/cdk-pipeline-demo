@@ -48,8 +48,8 @@ export class PipelineStack extends Stack {
                 actionName: 'PreDeployApprove',
                 runOrder: next
             }))
-            .addStage(preProd)
-            .addAction((pipeline, nextRunOrder) => new ShellScriptAction({
+            .addAppStage(preProd)
+            .addPostDeployAction((pipeline, nextRunOrder) => new ShellScriptAction({
                 actionName: 'TestService',
                 useOutputs: {
                     ENDPOINT_URL: pipeline.stackOutput(preProd.urlOutput)

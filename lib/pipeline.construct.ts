@@ -35,7 +35,7 @@ export class PipelineConstruct {
     private stage: Stage;
 
     private preDeployActions: Array<(pipeline: CdkPipeline, nextRunOrder: number) => IAction> = [];
-    private actions: Array<(pipeline: CdkPipeline, nextRunOrder: number) => IAction> = [];
+    private postDeployActions: Array<(pipeline: CdkPipeline, nextRunOrder: number) => IAction> = [];
     private sourceAction: IAction;
     private synthAction: IAction;
 
@@ -72,9 +72,9 @@ export class PipelineConstruct {
             readWriteType: ReadWriteType.WRITE_ONLY,
         });
 
-        // bucket.onCloudTrailPutObject(`${this.id}-event-rule`, {
-        //     paths: [bucketPath]
-        // });
+        const rule = bucket.onCloudTrailPutObject(`${this.id}-event-rule`, {
+            paths: [bucketPath]
+        });
 
         this.sourceAction = new S3SourceAction({
             actionName: 'S3Source',
@@ -103,26 +103,26 @@ export class PipelineConstruct {
         return this;
     }
 
-    addStage(stage: Stage) {
+    addAppStage(stage: Stage) {
         this.stage = stage;
         return this;
     }
 
-    addAction(fun: (pipeline: CdkPipeline, nextRunOrder: number) => IAction) {
-        this.actions.push(fun);
+    addPostDeployAction(fun: (pipeline: CdkPipeline, nextRunOrder: number) => IAction) {
+        this.postDeployActions.push(fun);
         return this;
     }
 
-    addInvokeLambdaAction(lambda: IFunction, params?: {[key: string]: unknown}) {
-
-        this.addAction((_, nextRunOrder) => new LambdaInvokeAction({
-            lambda: lambda,
-            actionName: `InvokeLambda`,
-            userParameters: params,
-            runOrder: nextRunOrder
-        }));
-        return this;
-    }
+    // addInvokeLambdaAction(lambda: IFunction, params?: {[key: string]: unknown}) {
+    //
+    //     this.addPostDeployAction((_, nextRunOrder) => new LambdaInvokeAction({
+    //         lambda: lambda,
+    //         actionName: `InvokeLambda`,
+    //         userParameters: params,
+    //         runOrder: nextRunOrder
+    //     }));
+    //     return this;
+    // }
 
     build() {
         this.pipeline = new CdkPipeline(this.scope, this.id, {
@@ -140,10 +140,13 @@ export class PipelineConstruct {
         }
 
         if (this.stage !== undefined) {
-            const appStage = this.pipeline.addApplicationStage(this.stage);
-            appStage.nextSequentialRunOrder()
-            this.actions.forEach(f => {
-                appStage.addActions(f(this.pipeline, appStage.nextSequentialRunOrder()))
+            this.pipeline.addApplicationStage(this.stage);
+        }
+
+        if (this.postDeployActions.length > 0) {
+            this.postDeployActions.forEach(f => {
+                const postDeploy = this.pipeline.addStage('PostDeploy');
+                postDeploy.addActions(f(this.pipeline, postDeploy.nextSequentialRunOrder()))
             });
         }
 
