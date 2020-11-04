@@ -59,44 +59,6 @@
         "aws:asset:property": "Code"
       }
     },
-    "devpipelinesourcesPipelineeventrule9CEE3AF4": {
-      "Type": "AWS::Events::Rule",
-      "Properties": {
-        "EventPattern": {
-          "source": [
-            "aws.s3"
-          ],
-          "detail-type": [
-            "AWS API Call via CloudTrail"
-          ],
-          "detail": {
-            "resources": {
-              "ARN": [
-                {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":s3:::dev-pipeline-sources/sources.zip"
-                    ]
-                  ]
-                }
-              ]
-            },
-            "eventName": [
-              "PutObject"
-            ]
-          }
-        },
-        "State": "ENABLED"
-      },
-      "Metadata": {
-        "aws:cdk:path": "pipeline/dev-pipeline-sources/Pipeline-event-rule/Resource"
-      }
-    },
     "devpipelinesourcespipelinePipelineF6A4ABEBSourceEventRulesourceszipDCFEB9FE": {
       "Type": "AWS::Events::Rule",
       "Properties": {
@@ -260,7 +222,7 @@
                         {
                           "Ref": "AWS::Partition"
                         },
-                        ":s3:::dev-pipeline-sources/sources.zip"
+                        ":s3:::dev-pipeline-sources/*"
                       ]
                     ]
                   }

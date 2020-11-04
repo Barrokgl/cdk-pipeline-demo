@@ -68,13 +68,13 @@ export class PipelineConstruct {
 
         const trail = new Trail(this.scope, `${this.id}-cloud-trail`);
 
-        trail.addS3EventSelector([{bucket, objectPrefix: bucket.arnForObjects(bucketPath)}], {
+        trail.addS3EventSelector([{bucket, objectPrefix: bucket.arnForObjects('*')}], {
             readWriteType: ReadWriteType.WRITE_ONLY,
         });
 
-        bucket.onCloudTrailPutObject(`${this.id}-event-rule`, {
-            paths: [bucketPath]
-        });
+        // bucket.onCloudTrailPutObject(`${this.id}-event-rule`, {
+        //     paths: [bucketPath]
+        // });
 
         this.sourceAction = new S3SourceAction({
             actionName: 'S3Source',

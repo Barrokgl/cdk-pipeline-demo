@@ -598,51 +598,6 @@
             "id": "dev-pipeline-sources",
             "path": "pipeline/dev-pipeline-sources",
             "children": {
-              "Pipeline-event-rule": {
-                "id": "Pipeline-event-rule",
-                "path": "pipeline/dev-pipeline-sources/Pipeline-event-rule",
-                "children": {
-                  "Resource": {
-                    "id": "Resource",
-                    "path": "pipeline/dev-pipeline-sources/Pipeline-event-rule/Resource",
-                    "attributes": {
-                      "aws:cdk:cloudformation:type": "AWS::Events::Rule",
-                      "aws:cdk:cloudformation:props": {
-                        "eventPattern": {
-                          "source": [
-                            "aws.s3"
-                          ],
-                          "detail-type": [
-                            "AWS API Call via CloudTrail"
-                          ],
-                          "detail": {
-                            "resources": {
-                              "ARN": [
-                                {
-                                  "Fn::Join": [
-                                    "",
-                                    [
-                                      "arn:",
-                                      {
-                                        "Ref": "AWS::Partition"
-                                      },
-                                      ":s3:::dev-pipeline-sources/sources.zip"
-                                    ]
-                                  ]
-                                }
-                              ]
-                            },
-                            "eventName": [
-                              "PutObject"
-                            ]
-                          }
-                        },
-                        "state": "ENABLED"
-                      }
-                    }
-                  }
-                }
-              },
               "pipelinePipelineF6A4ABEBSourceEventRulesources.zip": {
                 "id": "pipelinePipelineF6A4ABEBSourceEventRulesources.zip",
                 "path": "pipeline/dev-pipeline-sources/pipelinePipelineF6A4ABEBSourceEventRulesources.zip",
@@ -839,7 +794,7 @@
                                     {
                                       "Ref": "AWS::Partition"
                                     },
-                                    ":s3:::dev-pipeline-sources/sources.zip"
+                                    ":s3:::dev-pipeline-sources/*"
                                   ]
                                 ]
                               }
